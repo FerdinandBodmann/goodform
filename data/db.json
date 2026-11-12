@@ -1,0 +1,19 @@
+{
+ "users": [
+  {
+   "id": "571c59c0130f08a8fc1d40ba",
+   "email": "ferdinandbodmann@gmail.com",
+   "name": "Ferdinand Bodmann",
+   "pw": "6f3dfb63943b8cc9ae9e18c2a79f8575:a61ec662154a99320d3fbd4dbad50a26b220b14fe66450e43e860b72cb13fe7c90e6aa4d9751a09da3533f9364f0e61919787af7e80b7535ddf6b6ba465eb2dd",
+   "pro": true,
+   "created": 1794469546997
+  }
+ ],
+ "sessions": {
+  "2323e885b57ec6dbb4185fab3cf591af106618684593987c84463d35ed753c09": {
+   "uid": "571c59c0130f08a8fc1d40ba",
+   "exp": 1797061546997
+  }
+ },
+ "uploads": []
+}

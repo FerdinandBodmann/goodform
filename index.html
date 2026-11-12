@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f7f4" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#141513" media="(prefers-color-scheme: dark)">
+<title>Good Form — Design presets</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2322231f'/%3E%3Ccircle cx='29' cy='29' r='11' fill='none' stroke='%23f7f7f4' stroke-width='6'/%3E%3Cpath d='M40 29v13a11 11 0 0 1-18 8.5' fill='none' stroke='%23f7f7f4' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='6' fill='%23d6fa78'/%3E%3C/svg%3E">
+<script>try{const t=JSON.parse(localStorage.getItem('gf-theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="fonts" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f7f7f4;--ink:#22231f;--muted:#85867f;--soft:#6b6c65;--line:#e9e9e3;--card:#fff;--chip:#e9eadf;--chipline:#e4e5d8;--dot:#a7dd36;--btn:#20211e;--btnt:#fff;--serif:'Instrument Serif',Georgia,serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#141513;--ink:#ecece6;--muted:#8f9088;--soft:#a5a69e;--line:#2a2b27;--card:#1d1e1b;--chip:#2a2c25;--chipline:#3a3c33;--dot:#c4f25a;--btn:#ecece6;--btnt:#141513;color-scheme:dark}}
+:root[data-theme=dark]{--paper:#141513;--ink:#ecece6;--muted:#8f9088;--soft:#a5a69e;--line:#2a2b27;--card:#1d1e1b;--chip:#2a2c25;--chipline:#3a3c33;--dot:#c4f25a;--btn:#ecece6;--btnt:#141513;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;transition:background .25s,color .25s}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit}:focus-visible{outline:2px solid var(--dot);outline-offset:2px}
+.shell{max-width:1440px;margin:auto;padding:0 46px}
+.topbar{height:74px;display:flex;align-items:center;border-bottom:1px solid var(--line);gap:44px;position:sticky;top:0;background:var(--paper);z-index:5;transition:background .25s}
+.brand{font-weight:800;font-size:21px;letter-spacing:-1.2px;white-space:nowrap;text-decoration:none}.brand i{display:inline-block;width:10px;height:10px;background:var(--dot);border-radius:50%;margin:0 2px 0 1px}
+.nav{display:flex;gap:27px;color:var(--soft);font-size:13px;min-width:0}.nav a{text-decoration:none;white-space:nowrap}.nav a:hover,.nav a[aria-current]{color:var(--ink)}.nav a[aria-current]{font-weight:600}.nav sup{font:9px 'DM Mono',monospace;color:var(--muted)}
+.topright{margin-left:auto;display:flex;align-items:center;gap:14px}.pro{font-size:12px;color:var(--soft);text-decoration:none;white-space:nowrap}
+.icon-btn{width:34px;height:34px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;padding:0;font-size:13px}.icon-btn svg{width:16px;height:16px}
+.avatar{width:31px;height:31px;border-radius:50%;background:#edc9b7;color:#22231f;display:grid;place-items:center;font-size:11px;font-weight:700}
+.hero{padding:57px 0 30px;display:flex;justify-content:space-between;align-items:end;gap:20px}
+.eyebrow{font:10px 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}.eyebrow a{text-decoration:none}.eyebrow a:hover{color:var(--ink)}
+.hero h1{font:400 clamp(38px,4.4vw,58px)/1.05 var(--serif);letter-spacing:-1px;margin:12px 0 11px}.hero p{margin:0;color:var(--muted);font-size:14px;max-width:540px;line-height:1.5}
+.hero-note{color:var(--muted);font-size:12px;margin-bottom:4px;white-space:nowrap}
+.controls{display:flex;align-items:center;gap:20px;padding:20px 0 22px;border-top:1px solid var(--line)}
+.search{height:39px;width:232px;flex:none;background:var(--card);border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;padding:0 11px;gap:8px}.search svg{width:15px;stroke:var(--muted)}.search input{border:0;outline:0;background:transparent;width:100%;font-size:12px}.search input::placeholder{color:var(--muted)}
+.filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.filter{border:1px solid transparent;border-radius:30px;padding:9px 13px;background:transparent;color:var(--soft);font-size:11px;white-space:nowrap}.filter:hover{color:var(--ink)}.filter.active{background:var(--chip);color:var(--ink);border-color:var(--chipline)}.filter .n{font:9px 'DM Mono',monospace;color:var(--muted);margin-left:5px}
+.sort{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:11px;color:var(--soft);white-space:nowrap}.sort select{border:none;background:transparent;font-size:11px;outline:none}.sort option{background:var(--card)}
+.count{font:10px 'DM Mono',monospace;color:var(--muted);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:31px 22px;padding-bottom:70px}.card{min-width:0}
+.preview{position:relative;border-radius:7px;transition:transform .2s;cursor:zoom-in}.preview:hover{transform:translateY(-3px)}
+.cardfoot{display:flex;align-items:start;padding-top:13px;gap:10px}.cardfoot>div:first-child{margin-right:auto;min-width:0}.cardtitle{font-size:13px;font-weight:600;letter-spacing:-.2px}.cardmeta{font-size:10px;color:var(--muted);margin-top:5px}
+.badge{border-radius:20px;background:var(--card);border:1px solid var(--line);padding:5px 8px;font:9px 'DM Mono',monospace;color:var(--soft);white-space:nowrap}
+.fav{border:0;background:none;padding:3px 0 0;color:var(--muted);font-size:16px;line-height:1}.fav:hover,.fav[aria-pressed=true]{color:#e0567a}
+.actions{position:absolute;inset:auto 10px 10px;display:flex;justify-content:flex-end;gap:6px;opacity:0;transition:opacity .2s}.preview:hover .actions,.preview:focus-within .actions{opacity:1}@media (hover:none){.actions{opacity:1}}
+.action{background:rgba(255,255,255,.94);color:#22231f;border:0;border-radius:4px;padding:8px 11px;font-size:10px;box-shadow:0 2px 8px #0002}.action.primary{background:#20211e;color:#fff}
+.empty{grid-column:1/-1;padding:55px;text-align:center;color:var(--muted)}
+.colls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 22px;padding:26px 0 70px;border-top:1px solid var(--line)}
+.coll{text-decoration:none;display:block}.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;border-radius:10px;padding:6px;background:var(--card);border:1px solid var(--line);transition:transform .2s}.coll:hover .strip{transform:translateY(-3px)}.strip .stage{border-radius:4px}
+.coll h3{font:400 28px/1.1 var(--serif);margin:14px 0 4px}.coll p{margin:0;font-size:12px;color:var(--muted)}
+.page{border-top:1px solid var(--line);padding:34px 0 80px;display:grid;grid-template-columns:1.2fr 1fr;gap:46px}
+.prose p{font-size:15px;line-height:1.7;color:var(--soft);margin:0 0 16px;max-width:580px}.prose h2{font:400 28px var(--serif);margin:28px 0 10px}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;align-self:start}.facts div{background:var(--card);padding:22px}.facts b{display:block;font:400 44px/1 var(--serif);margin-bottom:6px}.facts span{font:10px 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;border-top:1px solid var(--line);padding:30px 0 80px;max-width:900px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px}.plan.hot{border-color:var(--ink)}.plan h3{margin:8px 0 0;font:400 32px var(--serif)}
+.price{font:700 36px 'Manrope',sans-serif;letter-spacing:-1px;margin:14px 0}.price small{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0}
+.plan ul{padding:0;list-style:none;margin:0 0 24px;font-size:13px;color:var(--soft);line-height:2.1}.plan li::before{content:'✳  ';color:var(--dot)}
+.btn{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:11px 16px;font-size:12px;background:var(--card);text-decoration:none;white-space:nowrap}.btn:hover{border-color:var(--muted)}.btn.primary{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+.page-empty{border-top:1px solid var(--line);padding:40px 0 90px}.ruled{border-top:1px solid var(--line);padding-top:26px}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;display:flex;gap:20px;align-items:center;font-size:12px;color:var(--muted)}footer .brand{font-size:16px;color:var(--ink)}footer nav{margin-left:auto;display:flex;gap:18px}footer a{text-decoration:none}footer nav a:hover{color:var(--ink)}
+dialog{border:0;padding:0;background:var(--paper);color:var(--ink);border-radius:12px;width:min(1180px,94vw);max-height:92vh;box-shadow:0 30px 80px #0005}dialog::backdrop{background:#0b0c0aa6;backdrop-filter:blur(3px)}
+.dlg{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(270px,1fr)}.dlg-stage{padding:22px;background:var(--card);display:flex;align-items:center}.dlg-stage .stage{width:100%}
+.dlg aside{padding:24px 26px;display:flex;flex-direction:column;gap:16px;overflow:auto}.dlg-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.dlg-nav{display:flex;gap:6px}
+.dlg h2{font:400 38px/1 var(--serif);margin:0}.dlg aside>p{margin:0;color:var(--soft);font-size:13px;line-height:1.5}
+.dlg dl{display:grid;grid-template-columns:auto 1fr;gap:7px 18px;margin:0;font-size:12px}.dlg dt{color:var(--muted)}.dlg dd{margin:0}
+.swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.swatch{width:36px;height:36px;border-radius:6px;border:1px solid var(--line);padding:0}
+.dlg-actions{display:flex;gap:8px;flex-wrap:wrap}.related{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}.related .filter{background:var(--chip)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--btn);color:var(--btnt);padding:10px 16px;border-radius:30px;font-size:12px;opacity:0;transition:.25s;pointer-events:none;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+.cframe{position:relative;aspect-ratio:435/230;border-radius:7px;overflow:hidden;border:1px solid rgba(0,0,0,.07);background:var(--card)}
+.cframe iframe{position:absolute;top:0;left:0;width:200%;height:200%;border:0;transform:scale(.5);transform-origin:0 0;pointer-events:none}
+dialog{overflow:auto}.cframe.live{aspect-ratio:870/330;border-radius:0;border:0}.cframe.live iframe{width:100%;height:100%;transform:none;pointer-events:auto}
+.dlg.comp{grid-template-columns:1fr}.dlg.comp .dlg-stage{padding:0;display:block}
+.code-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.code{min-width:0}.code .eyebrow{margin-bottom:8px}
+.code pre{margin:0;max-height:320px;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;font:11.5px/1.6 'DM Mono',monospace;tab-size:2}
+.brand{display:inline-flex;align-items:center;gap:9px}.brand>span{white-space:nowrap}.mark{width:28px;height:28px;flex:none}.mark .bg{fill:var(--ink)}.mark .fg{stroke:var(--paper)}.mark .dt{fill:var(--dot)}footer .mark{width:22px;height:22px}
+.acct{position:relative}.acct summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px}.acct summary::-webkit-details-marker{display:none}
+.acct-menu{position:absolute;right:0;top:calc(100% + 10px);min-width:210px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 12px 30px #0002;z-index:10}
+.acct-menu a,.acct-menu button{display:block;width:100%;text-align:left;padding:9px 10px;border:0;background:none;border-radius:6px;font-size:13px;text-decoration:none}.acct-menu a:hover,.acct-menu button:hover{background:var(--chip)}
+.acct-menu .who{padding:8px 10px 10px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);margin-bottom:4px;line-height:1.5}
+.pro-pill{font:9px 'DM Mono',monospace;background:var(--dot);color:#22231f;padding:3px 6px;border-radius:20px}
+dialog.narrow{width:min(420px,94vw)}.auth{padding:26px;display:flex;flex-direction:column;gap:12px}.auth h2{font:400 34px/1 var(--serif);margin:8px 0 4px}.auth .tabs{display:flex;gap:4px}
+.auth input{padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:14px}.err{color:#d6456a;font-size:12px;min-height:16px;margin:0}
+.btn.sm{padding:7px 11px;font-size:11px}.btn:disabled{opacity:.5;cursor:wait}
+.upform{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:18px;border:1px dashed var(--chipline);border-radius:10px;margin-bottom:28px;font-size:13px;color:var(--soft)}.upform input[type=text]{flex:1;min-width:160px;padding:9px 11px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.ufile{aspect-ratio:435/230;border-radius:7px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;overflow:hidden}.utable-wrap{overflow-x:auto;padding-bottom:70px}.utable{width:100%;border-collapse:collapse;font-size:13px}.utable th{text-align:left;font:10px 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--line)}
+.utable td{padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}.utable td:last-child{text-align:right}.utable .muted{color:var(--muted)}.utable .you{font:9px 'DM Mono',monospace;color:var(--muted);margin-left:6px}
+.ufile{position:relative}.ufile img{position:absolute;inset:11%;width:78%;height:78%;object-fit:contain}a.badge{text-decoration:none}.ucss{font:600 30px 'DM Mono',monospace;color:var(--muted)}
+.lm{display:grid;grid-template-columns:52px minmax(0,1fr) 300px;gap:18px;border-top:1px solid var(--line);padding:24px 0 70px;align-items:start}
+.lm-tools{display:flex;flex-direction:column;gap:6px;position:sticky;top:90px}.lm-tools button{width:48px;height:48px;border-radius:10px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;font-size:18px;padding:0}.lm-tools button.on{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+.lm-stage{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;place-items:center}
+#lmSvg{width:100%;max-width:580px;aspect-ratio:1;display:block;touch-action:none;user-select:none;background:#fff conic-gradient(#ececec 25%,#fff 0 50%,#ececec 0 75%,#fff 0) 0 0/24px 24px;border-radius:6px;box-shadow:0 2px 12px #0002}
+.lm-panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;position:sticky;top:90px;max-height:calc(100vh - 110px);overflow:auto}
+.lm-panel .row{display:grid;grid-template-columns:84px 1fr;align-items:center;gap:10px;font-size:12px;color:var(--soft)}.lm-panel input[type=range]{width:100%;accent-color:var(--ink)}
+.lm-panel input[type=number],.lm-panel input[type=text],.lm-panel select{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--paper);font-size:12px}
+.colrow{display:flex;gap:8px;align-items:center}.colrow input[type=color]{flex:1;height:30px;border:1px solid var(--line);border-radius:6px;background:none;padding:2px}.chk{display:flex;gap:4px;align-items:center;font-size:11px;white-space:nowrap}
+.xywh{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.xywh label{font-size:10px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.lm-btns{display:flex;flex-wrap:wrap;gap:6px}.lm-hint{font-size:11px;color:var(--muted);margin:0;line-height:1.55}
+.layers{display:flex;flex-direction:column;gap:2px;max-height:180px;overflow:auto}.layers button{display:flex;gap:8px;align-items:center;padding:7px 8px;border:0;border-radius:6px;background:none;font-size:12px;text-align:left}.layers button.on{background:var(--chip)}.layers i{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);flex:none}
+@media(max-width:900px){.lm{grid-template-columns:1fr}.lm-tools{flex-direction:row;flex-wrap:wrap;position:static}.lm-panel{position:static;max-height:none}}
+@media(max-width:900px){.shell{padding:0 25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-note{display:none}.page,.dlg,.colls,.code-grid{grid-template-columns:1fr}.controls{flex-wrap:wrap}.filters{order:3;width:100%}}
+@media(max-width:620px){.shell{padding:0 16px}.topbar{height:62px;gap:16px}.nav{gap:14px;font-size:12px;overflow-x:auto;scrollbar-width:none}.pro{display:none}.hero{padding:39px 0 25px}.controls{gap:12px}.search{width:100%}.sort{margin-left:0}.grid{grid-template-columns:1fr;gap:24px}.plans,.facts{grid-template-columns:1fr}footer{flex-wrap:wrap}footer nav{margin-left:0}.dlg-stage{padding:12px}.dlg aside{padding:18px}}
+</style><style id="mockcss"></style></head>
+<body><div class="shell">
+<header class="topbar"><a class="brand" href="#/explore" aria-label="Good Form home"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect class="bg" width="64" height="64" rx="16"/><circle class="fg" cx="29" cy="29" r="11" fill="none" stroke-width="6"/><path class="fg" d="M40 29v13a11 11 0 0 1-18 8.5" fill="none" stroke-width="6" stroke-linecap="round"/><circle class="dt" cx="47" cy="16" r="6"/></svg><span>good<i></i>form</span></a><nav class="nav"><a href="#/explore" data-page="explore">Explore</a><a href="#/components" data-page="components">Components</a><a href="#/logo" data-page="logo">Logo maker</a><a href="#/community" data-page="community">Community</a><a href="#/collections" data-page="collections">Collections</a><a href="#/saved" data-page="saved">Saved <sup id="savedCount"></sup></a><a href="#/about" data-page="about">About</a></nav><div class="topright"><a class="pro" href="#/pro">Get Pro ↗</a><button class="icon-btn" id="themeBtn"></button><div id="acct"></div></div></header>
+<div id="view"></div>
+<footer><a class="brand" href="#/explore"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect class="bg" width="64" height="64" rx="16"/><circle class="fg" cx="29" cy="29" r="11" fill="none" stroke-width="6"/><path class="fg" d="M40 29v13a11 11 0 0 1-18 8.5" fill="none" stroke-width="6" stroke-linecap="round"/><circle class="dt" cx="47" cy="16" r="6"/></svg><span>good<i></i>form</span></a><span>© 2026 · Made for your next big idea</span><nav><a href="#/components">Components</a><a href="#/logo">Logo maker</a><a href="#/community">Community</a><a href="#/collections">Collections</a><a href="#/about">About</a><a href="#/pro">Pro</a></nav></footer>
+</div><dialog id="dlg" aria-label="Preset preview"></dialog><div class="toast" id="toast" role="status"></div>
+<script>
+// Mocks are sized in em off a container-relative base, so the same markup scales for cards, the modal and exported HTML.
+const MOCK_CSS=`.stage{container-type:inline-size;aspect-ratio:435/230;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:7px;border:1px solid rgba(0,0,0,.07)}
+.m{font-size:2.3cqw;width:76%;height:80%;background:var(--s);color:var(--t);font-family:var(--bf);padding:1.6em 2em;box-shadow:0 1.2em 3em rgba(0,0,0,.12);overflow:hidden;position:relative;line-height:1.4;border-radius:var(--r,0);text-align:left;box-sizing:border-box}
+.m h3{font-family:var(--hf);font-weight:var(--hw,400);font-size:2.3em;line-height:1.04;letter-spacing:-.03em;margin:1.3em 0 .5em}
+.m p{font-size:.8em;color:var(--m);margin:0 0 .7em;max-width:62%}
+.m small,.m .top{font-family:'DM Mono',monospace;font-size:.72em;letter-spacing:.08em;text-transform:uppercase}
+.m .top{display:flex;justify-content:space-between;gap:1em}
+.m .cta{display:inline-block;background:var(--a);color:var(--at);font-size:.72em;padding:.8em 1.1em;border-radius:var(--r,0);margin-top:.4em}
+.m-split{width:86%;display:grid;grid-template-columns:1fr 1fr;gap:1em;padding:1.4em}.m-split>div:first-child{padding:.8em}.m-split h3{font-size:1.9em}.m-split p{max-width:none}
+.m-split .blk{background:var(--a);color:var(--at);display:flex;align-items:flex-end;padding:1em}.m-split i,.m-img i{font-family:var(--hf);font-size:1.5em}
+.m-cen{width:70%;text-align:center}.m-cen p{margin-left:auto;margin-right:auto;max-width:80%}
+.m-cen .ring{width:2.8em;height:2.8em;font-size:2em;border-radius:50%;background:var(--a);color:var(--at);display:grid;place-items:center;margin:0 auto .4em;font-family:var(--hf)}
+.m-cen h3{font-size:1.9em;margin:.35em 0}.m-cen hr{border:0;border-top:1px solid color-mix(in srgb,var(--t) 14%,transparent);margin:1em 1.5em}
+.m-img{width:82%;padding:1.3em 1.6em}.m-img .blk{height:42%;margin-top:1em;background:var(--a);color:var(--at);display:grid;place-items:center}.m-img i{font-size:2.4em}.m-img h3{font-size:1.6em;margin:.6em 0 .2em}
+.m-stats .row{display:flex;gap:2.2em;margin-top:1.6em;padding-top:1em;border-top:1px solid color-mix(in srgb,var(--t) 12%,transparent)}.m-stats b{display:block;font-family:var(--hf);font-size:1.4em;color:var(--a)}.m-stats .row small{font-size:.58em;color:var(--m)}
+.m-poster{width:58%;height:86%;background:var(--a);color:var(--at);display:flex;flex-direction:column}.m-poster h3{font-size:3.2em;flex:1;margin:.35em 0}
+.m-poster .foot{display:flex;justify-content:space-between;gap:1em;font-size:.72em;border-top:1px solid currentColor;padding-top:.7em;opacity:.85}
+.m-post{width:auto;height:84%;aspect-ratio:1;padding:1.6em}.m-post .who{display:flex;align-items:center;gap:.6em;font-size:.8em;font-weight:600}.m-post .dot{width:1.9em;height:1.9em;border-radius:50%;background:var(--a)}
+.m-post h3{font-size:2.1em;margin:1em 0 .4em}.m-post p{max-width:none}.m-post small{display:block;margin-top:1.4em;color:var(--a)}
+.m-mail{width:62%;height:90%;padding:0;display:flex;flex-direction:column}.m-mail .hd{background:var(--a);color:var(--at);padding:.9em 1.5em;font-family:'DM Mono',monospace;font-size:.68em;letter-spacing:.08em}
+.m-mail .bd{padding:0 1.5em;flex:1}.m-mail h3{font-size:1.8em;margin:1em 0 .45em}.m-mail p{max-width:none}.m-mail .ft{font-size:.58em;color:var(--m);text-align:center;padding:.9em;border-top:1px solid color-mix(in srgb,var(--t) 10%,transparent)}
+.m-cv{width:62%;height:90%;padding:1.8em 2em}.m-cv h3{font-size:2em;margin:0 0 .25em}.m-cv .cols{display:grid;grid-template-columns:1.6fr 1fr;gap:1.4em;margin-top:1.3em;padding-top:1em;border-top:1px solid color-mix(in srgb,var(--t) 12%,transparent)}
+.m-cv b{display:block;font-family:'DM Mono',monospace;font-size:.6em;letter-spacing:.08em;text-transform:uppercase;color:var(--a);margin:0 0 .7em}.m-cv p{max-width:none}
+.m-cv i{display:block;height:.42em;border-radius:1em;background:color-mix(in srgb,var(--t) 10%,transparent);margin-bottom:.55em}.m-cv i:nth-of-type(2n){width:72%}.m-cv i+b{margin-top:1.2em}
+.m-app{width:auto;height:92%;padding:0;background:none;box-shadow:none;overflow:visible}.m-app .phone{height:100%;aspect-ratio:9/17;background:var(--s);border:.45em solid #151515;border-radius:2.2em;padding:1.5em 1.1em;position:relative;box-shadow:0 1.2em 3em rgba(0,0,0,.18);box-sizing:border-box}
+.m-app h3{font-size:1.45em;margin:1em 0 .8em}.m-app .c{background:var(--a);color:var(--at);border-radius:1em;padding:1em;font-size:.78em;font-weight:600}.m-app .alt{background:color-mix(in srgb,var(--t) 7%,transparent);color:var(--t);margin-top:.6em;font-weight:500}
+.m-app .tab{position:absolute;left:0;right:0;bottom:1.2em;display:flex;justify-content:center;gap:2.2em}.m-app .tab i{width:.6em;height:.6em;border-radius:50%;background:var(--m)}.m-app .tab i:first-child{background:var(--a)}
+.m-deck{width:72%;height:auto;aspect-ratio:16/9}.m-deck h3{font-size:2.5em;margin:.8em 0 .3em;max-width:85%}.m-deck .bar{position:absolute;left:0;bottom:0;height:.5em;width:38%;background:var(--a)}.m-deck small{position:absolute;right:2.6em;bottom:1.8em;color:var(--m)}
+.m-brand{width:74%}.m-brand .logo{display:flex;align-items:center;gap:.6em;font-family:var(--hf);font-weight:var(--hw,400);font-size:1.2em}.m-brand .logo span{width:1.8em;height:1.8em;border-radius:50%;background:var(--a);color:var(--at);display:grid;place-items:center}
+.m-brand .sw{display:flex;gap:.5em;margin-top:1.4em}.m-brand .sw i{width:2.8em;height:2.8em;border-radius:.4em;border:1px solid color-mix(in srgb,var(--t) 15%,transparent)}.m-brand h3{font-size:1.8em;margin:.9em 0 .3em}`;
+document.querySelector('#mockcss').textContent=MOCK_CSS;
+
+const FONT={serif:"'Instrument Serif',Georgia,serif",fraunces:"'Fraunces',Georgia,serif",man:"'Manrope',system-ui,sans-serif",grot:"'Space Grotesk',system-ui,sans-serif",sans:"'DM Sans',system-ui,sans-serif"};
+const CATS=['Websites','Social','Presentations','Branding','Email','Portfolio','Posters','Resumes','Mobile'];
+// pal: [stage bg, surface, text, muted, accent, text-on-accent]
+const DATA=[
+{t:'Sunday Studio',c:'Websites',s:'Editorial',l:'editorial',f:'serif',pal:['#e6d8c6','#fbf7f0','#2b2620','#756d63','#44513d','#ffffff'],n:'Sunday Studio',h:'A slower kind of good.',p:'Everyday objects, made with intention.',x:'Shop the collection',tag:'EDITOR’S PICK',pop:98,d:'2025-09-02'},
+{t:'Field Notes',c:'Branding',s:'Organic',l:'split',f:'serif',pal:['#e2e7df','#f7f8f3','#2c3329','#798378','#b6c1a9','#ffffff'],n:'fieldnotes',h:'Room to grow.',p:'A little more outside, every day.',x:'Garden goods',tag:'POPULAR',pop:91,d:'2025-08-14'},
+{t:'Brightside',c:'Presentations',s:'Bold',l:'deck',f:'man',w:700,pal:['#d5d7f7','#faf9ff','#1e1d33','#77768a','#6765db','#ffffff'],n:'BRIGHTSIDE®',h:'Make room for what’s next.',p:'A simple story for a bold idea.',x:'Q3 kickoff',tag:'NEW',pop:84,d:'2026-10-20'},
+{t:'Little Rituals',c:'Social',s:'Soft',l:'centered',f:'serif',pal:['#e9cfbd','#fff8f2','#3b2d25','#86776d','#d58e70','#ffffff'],n:'daily ritual no. 04',h:'Take a little time.',p:'Small moments, thoughtfully made.',x:'a little note to self',tag:'POPULAR',pop:89,d:'2025-11-03'},
+{t:'After Hours',c:'Websites',s:'Dark',l:'editorial',f:'serif',pal:['#20221f','#2a2c28','#efeee8','#a9aaa3','#d6fa78','#20221f'],n:'After Hours',h:'Good work deserves a softer landing.',p:'A place to pause, pour, and stay a while.',x:'Explore the menu',tag:'DARK MODE',pop:93,d:'2025-12-12'},
+{t:'Sunday Market',c:'Posters',s:'Vintage',l:'poster',f:'fraunces',pal:['#f3e6c4','#faf5e8','#3a3122','#80755e','#c4572f','#faf5e8'],n:'Sunday Market · Est. 2019',h:'A good day for the little things.',p:'Open every weekend',x:'9–2 · Harbour lot',tag:'STAFF FAVE',pop:87,d:'2026-02-08'},
+{t:'Still Life',c:'Social',s:'Editorial',l:'image',f:'serif',pal:['#dce8e3','#f7fbf8','#24302a','#7c8981','#9cb9aa','#eff5f0'],n:'still life journal',h:'Objects with a past.',p:'Collected slowly. Kept forever.',x:'Objects in good company',tag:'NEW',pop:76,d:'2026-09-30'},
+{t:'Soft Focus',c:'Websites',s:'Soft',l:'editorial',f:'serif',r:'1.2em',pal:['#ecd7e4','#fffafd','#3a2a35','#8c7c86','#e2bfd6','#3a2a35'],n:'soft focus',h:'A little more you, every day.',p:'Make space for what matters most.',x:'A note from the studio',tag:'POPULAR',pop:85,d:'2025-10-21'},
+{t:'Northstar',c:'Presentations',s:'Corporate',l:'stats',f:'man',w:700,pal:['#d5e2f0','#f9fbff','#18222e','#76869a','#3d6fb6','#ffffff'],n:'NORTHSTAR',h:'The future is a place we make.',p:'A clear path for a changing world.',stats:[['24%','Growth'],['03','New markets'],['1.2k','Partners']],tag:'FRESH',pop:79,d:'2026-06-11'},
+{t:'Morning Post',c:'Email',s:'Editorial',l:'email',f:'serif',pal:['#efeae2','#fffdf9','#2a2722','#8a8378','#2a2722','#fffdf9'],n:'THE MORNING POST · No. 112',h:'Five slow reads for a fast week.',p:'Hand-picked essays, delivered every Sunday.',x:'Read the issue',tag:'NEW',pop:72,d:'2026-10-02'},
+{t:'Launch Day',c:'Email',s:'Bold',l:'email',f:'grot',w:600,r:'.4em',pal:['#ffe8d6','#ffffff','#1d1a17','#7d736b','#ff6b35','#ffffff'],n:'PARCEL — product update',h:'It’s finally here.',p:'Everything you asked for, and a few things you didn’t.',x:'See what’s new',tag:'POPULAR',pop:82,d:'2026-04-17'},
+{t:'Mara Lindqvist',c:'Portfolio',s:'Minimal',l:'image',f:'grot',w:500,pal:['#e8e6e1','#fafaf8','#1c1c1a','#8a8a85','#1c1c1a','#fafaf8'],n:'mara lindqvist — work',h:'Interfaces for calm software.',p:'Product designer in Stockholm. Open for 2027.',x:'Selected work 2019–26',tag:'STAFF FAVE',pop:80,d:'2026-07-23'},
+{t:'Atelier Nord',c:'Portfolio',s:'Editorial',l:'split',f:'fraunces',pal:['#d9d3c7','#f4f1ea','#26231e','#7a7366','#8c6f4f','#f4f1ea'],n:'atelier nord',h:'Spaces that hold you.',p:'Architecture & interiors, since 2011.',x:'Residence Holm, 2025',pop:68,d:'2026-03-15'},
+{t:'Night Shift',c:'Posters',s:'Dark',l:'poster',f:'grot',w:700,pal:['#141414','#1d1d1d','#f2f2f2','#999999','#ff4fd8','#141414'],n:'Night Shift · Vol. 7',h:'Dance until the lights come up.',p:'Fri 14 Nov',x:'Warehouse 9 · 22:00',tag:'NEW',pop:77,d:'2026-11-01'},
+{t:'Green Room',c:'Posters',s:'Organic',l:'poster',f:'serif',pal:['#cfe0c3','#eef5e8','#1f2a1a','#6f7f66','#2f5b2a','#eef5e8'],n:'Green Room Plant Swap',h:'Bring one, take one.',p:'Sat 22 Nov',x:'Community hall · 11–4',pop:64,d:'2026-08-05'},
+{t:'Clean Slate',c:'Resumes',s:'Minimal',l:'resume',f:'man',w:700,pal:['#e9ebee','#ffffff','#1b1e23','#7a808a','#3557d4','#ffffff'],n:'Product manager · Berlin',h:'Jonas Weber',p:'Led growth at two seed-stage startups, from zero to 40k users.',x:'hello@jonas.design',tag:'POPULAR',pop:88,d:'2025-07-19'},
+{t:'Paper Trail',c:'Resumes',s:'Editorial',l:'resume',f:'serif',pal:['#ece4d8','#fbf8f2','#2a241c','#837867','#a2492b','#ffffff'],n:'Writer & editor',h:'Ines Moreau',p:'Eight years editing features for print and web.',x:'ines@papertrail.fr',pop:70,d:'2026-01-28'},
+{t:'Pocket Budget',c:'Mobile',s:'Soft',l:'app',f:'man',w:700,pal:['#dfe9f5','#fbfdff','#16202c','#7b8796','#4f7cff','#ffffff'],n:'pocket',h:'Good morning, Sam.',p:'€1,240 left this month',x:'3 bills due this week',tag:'NEW',pop:81,d:'2026-10-27'},
+{t:'Daily Bloom',c:'Mobile',s:'Organic',l:'app',f:'fraunces',pal:['#f4ddd6','#fffaf7','#3a2622','#8f766f','#e07a5f','#ffffff'],n:'bloom',h:'Water the fern today.',p:'6 plants thriving',x:'Next: repot the monstera',pop:74,d:'2026-05-09'},
+{t:'Kiln & Co',c:'Branding',s:'Vintage',l:'brand',f:'fraunces',sym:'K',pal:['#efe2d2','#fbf6ef','#3b2a1e','#8a7462','#b5653a','#fbf6ef'],n:'Kiln & Co',h:'Hand-thrown',p:'Stoneware, made one at a time since 2014.',tag:'STAFF FAVE',pop:83,d:'2026-02-22'},
+{t:'Volt',c:'Branding',s:'Bold',l:'brand',f:'grot',w:700,sym:'V',pal:['#e5ff5c','#111111','#f5f5f0','#9a9a92','#e5ff5c','#111111'],n:'Volt',h:'Energy, simplified',p:'Charging for people who hate charging.',pop:78,d:'2026-09-12'},
+{t:'Pitch Perfect',c:'Presentations',s:'Dark',l:'deck',f:'man',w:700,pal:['#1a1b2e','#23243d','#f1f0ff','#a3a2c2','#ffb547','#1a1b2e'],n:'SEED ROUND',h:'We make onboarding disappear.',p:'Raising €2M to bring it to every SaaS team.',x:'hello@onboard.ly',tag:'DARK MODE',pop:86,d:'2026-08-29'},
+{t:'Quote Card',c:'Social',s:'Bold',l:'post',f:'grot',w:700,pal:['#ffd84d','#1c1c1c','#fafafa','#aaaaaa','#ffd84d','#1c1c1c'],n:'@studio.wednesday',h:'“Done is a design decision.”',p:'Notes from the studio, ep. 31',x:'Swipe for more →',tag:'POPULAR',pop:90,d:'2026-01-09'},
+{t:'Weekend Reads',c:'Social',s:'Minimal',l:'post',f:'serif',pal:['#e4e9ef','#ffffff','#1f2630','#7d8794','#2f6fed','#ffffff'],n:'@weekendreads',h:'Three books for a rainy Sunday.',p:'Our picks, lightly annotated.',x:'Save for later',pop:66,d:'2026-06-30'},
+{t:'Harbor Café',c:'Websites',s:'Vintage',l:'image',f:'fraunces',pal:['#d8e3ea','#f5f8fa','#1f2b33','#73838e','#2d5468','#f5f8fa'],n:'harbor café',h:'Coffee by the water.',p:'Open 7–17, every day of the year.',x:'Est. 1987',pop:73,d:'2026-04-02'},
+{t:'Monolith',c:'Websites',s:'Minimal',l:'editorial',f:'grot',w:700,pal:['#c9c9c4','#f0f0ec','#0e0e0e','#6b6b66','#0e0e0e','#f0f0ec'],n:'MONOLITH ARCHITECTS',h:'We build quiet buildings.',p:'Concrete, timber, and patience.',x:'View projects',tag:'NEW',pop:71,d:'2026-10-11'},
+{t:'Studio Year',c:'Presentations',s:'Editorial',l:'stats',f:'serif',pal:['#ecdcc8','#fcf8f2','#2a2219','#85786a','#a0522d','#ffffff'],n:'ANNUAL REVIEW 2026',h:'A year of small, good things.',p:'What we made, learned and kept.',stats:[['48','Projects'],['12','Clients'],['03','New hires']],pop:69,d:'2026-11-05'}];
+const COLL=[
+{id:'quiet',title:'Quiet & editorial',desc:'Serif-led, plenty of air.',items:['Sunday Studio','Still Life','Morning Post','Atelier Nord','Paper Trail','Studio Year']},
+{id:'after-dark',title:'After dark',desc:'Low light, high contrast.',items:['After Hours','Night Shift','Pitch Perfect','Quote Card','Volt']},
+{id:'launch',title:'Launch week',desc:'Everything for a big announcement.',items:['Brightside','Launch Day','Pitch Perfect','Northstar','Monolith']},
+{id:'small-biz',title:'Small business kit',desc:'Shopfront, posters and a brand to match.',items:['Sunday Market','Kiln & Co','Harbor Café','Field Notes','Green Room','Little Rituals']},
+{id:'job-hunt',title:'Job hunt',desc:'Résumés and portfolios that get read.',items:['Clean Slate','Paper Trail','Mara Lindqvist','Atelier Nord']}];
+
+// Components render in sandboxed iframes so their CSS can't leak into the site; what you see is exactly what gets copied.
+const BG={vivid:'radial-gradient(circle at 18% 28%,#ff7ab6,transparent 38%),radial-gradient(circle at 82% 62%,#6a8bff,transparent 42%),radial-gradient(circle at 52% 95%,#ffd36a,transparent 38%),#1c1b2e',sky:'linear-gradient(135deg,#a8c0ff,#f6d3ff 55%,#ffe7c2)',light:'#f4f4f1',dark:'#111214',neu:'#e6e9ef',sand:'#f3ead8'};
+const TOP='padding:0;align-items:flex-start',FULL='padding:0;display:block';
+const CCATS=['Navbars','Menus','Buttons','Cards','CSS Kits'];
+const COMPS=[
+{t:'Liquid Glass Nav',c:'Navbars',k:'backdrop-filter',tag:'POPULAR',bg:BG.vivid,desc:'A floating pill navbar made of frosted, light-catching glass. Put it over any photo or gradient. The links collapse under 640px.',
+html:`<nav class="lg-nav">
+  <a class="lg-brand" href="#">◐ Lumen</a>
+  <ul class="lg-links">
+    <li><a href="#" aria-current="page">Home</a></li>
+    <li><a href="#">Work</a></li>
+    <li><a href="#">Studio</a></li>
+    <li><a href="#">Journal</a></li>
+  </ul>
+  <a class="lg-cta" href="#">Let’s talk</a>
+</nav>`,
+css:`.lg-nav{
+  display:flex;align-items:center;gap:28px;
+  padding:10px 10px 10px 22px;border-radius:999px;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),0 10px 30px rgba(0,0,0,.25);
+  color:#fff;font:500 15px/1 system-ui,sans-serif;
+}
+.lg-brand{color:inherit;text-decoration:none;font-weight:700}
+.lg-links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.lg-links a{display:block;padding:10px 16px;border-radius:999px;color:rgba(255,255,255,.8);text-decoration:none;transition:background .2s,color .2s}
+.lg-links a:hover,.lg-links a[aria-current]{background:rgba(255,255,255,.18);color:#fff}
+.lg-cta{padding:12px 18px;border-radius:999px;background:#fff;color:#111;text-decoration:none;font-weight:600}
+@media (max-width:640px){.lg-links{display:none}}`},
+{t:'Minimal Top Bar',c:'Navbars',k:'CSS grid',bg:BG.light,body:TOP,desc:'A clean SaaS header: logo, centred links and sign-in actions on a three-column grid. The links tuck away on small screens.',
+html:`<header class="mt-bar">
+  <a class="mt-logo" href="#">north<span>.</span></a>
+  <nav class="mt-links">
+    <a href="#" aria-current="page">Product</a>
+    <a href="#">Pricing</a>
+    <a href="#">Customers</a>
+    <a href="#">Docs</a>
+  </nav>
+  <div class="mt-actions">
+    <a href="#" class="mt-ghost">Sign in</a>
+    <a href="#" class="mt-btn">Get started</a>
+  </div>
+</header>`,
+css:`.mt-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;box-sizing:border-box;padding:18px 32px;border-bottom:1px solid #e6e6e1;background:#fff;font:14px/1 system-ui,sans-serif}
+.mt-logo{font-weight:800;font-size:20px;letter-spacing:-.04em;color:#111;text-decoration:none}
+.mt-logo span{color:#4f6bff}
+.mt-links{display:flex;gap:28px}
+.mt-links a{color:#666;text-decoration:none}
+.mt-links a:hover,.mt-links a[aria-current]{color:#111}
+.mt-actions{display:flex;justify-content:flex-end;align-items:center;gap:18px}
+.mt-ghost{color:#111;text-decoration:none}
+.mt-btn{background:#111;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600}
+@media (max-width:720px){.mt-links,.mt-ghost{display:none}.mt-bar{grid-template-columns:1fr auto}}`},
+{t:'Announcement Nav',c:'Navbars',k:'dark',bg:BG.dark,body:TOP,desc:'A dark navbar with a gradient announcement strip on top, good for launches and changelogs.',
+html:`<div class="an-wrap">
+  <p class="an-bar">Version 3.0 is live — <a href="#">see what’s new →</a></p>
+  <nav class="an-nav">
+    <a class="an-logo" href="#">▲ Vertex</a>
+    <div class="an-links">
+      <a href="#">Platform</a><a href="#">Solutions</a><a href="#">Changelog</a><a href="#">Company</a>
+    </div>
+    <a class="an-btn" href="#">Book a demo</a>
+  </nav>
+</div>`,
+css:`.an-wrap{width:100%;font:14px/1.2 system-ui,sans-serif;color:#e8e8ea}
+.an-bar{margin:0;padding:10px;text-align:center;background:linear-gradient(90deg,#5b3df5,#c03df5);font-size:13px}
+.an-bar a{color:#fff;font-weight:600}
+.an-nav{display:flex;align-items:center;gap:36px;padding:18px 32px;border-bottom:1px solid #26272b}
+.an-logo{font-weight:700;color:#fff;text-decoration:none;font-size:17px}
+.an-links{display:flex;gap:26px;margin-right:auto}
+.an-links a{color:#9a9ba3;text-decoration:none}
+.an-links a:hover{color:#fff}
+.an-btn{border:1px solid #3a3b41;padding:10px 16px;border-radius:999px;color:#fff;text-decoration:none;transition:background .2s,color .2s}
+.an-btn:hover{background:#fff;color:#111}
+@media (max-width:720px){.an-links{display:none}.an-btn{margin-left:auto}}`},
+{t:'Sidebar Nav',c:'Navbars',k:'app shell',bg:'#f6f6f3',body:'padding:0;justify-content:flex-start;align-items:stretch',desc:'A dark app sidebar with sections, counters, an active state and a user row pinned to the bottom.',
+html:`<aside class="sb">
+  <a class="sb-logo" href="#">◆ Atlas</a>
+  <p class="sb-label">Workspace</p>
+  <a class="sb-item active" href="#"><span>⌂</span>Dashboard</a>
+  <a class="sb-item" href="#"><span>▤</span>Projects<em>12</em></a>
+  <a class="sb-item" href="#"><span>✉</span>Inbox<em>3</em></a>
+  <a class="sb-item" href="#"><span>◷</span>Calendar</a>
+  <p class="sb-label">Account</p>
+  <a class="sb-item" href="#"><span>⚙</span>Settings</a>
+  <div class="sb-user"><b>JW</b>Jonas Weber</div>
+</aside>`,
+css:`.sb{width:240px;min-height:100vh;box-sizing:border-box;padding:22px 14px;background:#16171a;color:#cfd0d4;display:flex;flex-direction:column;gap:2px;font:14px/1 system-ui,sans-serif}
+.sb-logo{color:#fff;font-weight:700;font-size:17px;text-decoration:none;padding:0 10px 18px}
+.sb-label{margin:18px 10px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#6c6d74}
+.sb-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;color:inherit;text-decoration:none}
+.sb-item span{width:18px;text-align:center;opacity:.7}
+.sb-item em{margin-left:auto;font-style:normal;font-size:11px;background:#2a2b30;padding:3px 7px;border-radius:99px}
+.sb-item:hover{background:#222328}
+.sb-item.active{background:#2b2d33;color:#fff}
+.sb-user{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid #26272c}
+.sb-user b{width:30px;height:30px;border-radius:50%;background:#e8c4b0;color:#16171a;display:grid;place-items:center;font-size:11px}`},
+{t:'Glass Tab Bar',c:'Navbars',k:'mobile',tag:'NEW',bg:BG.sky,body:'align-items:flex-end;padding-bottom:48px',desc:'An iOS-style bottom tab bar in frosted glass, with a raised action button in the middle.',
+html:`<nav class="tb" aria-label="Main">
+  <a href="#" class="tb-item active"><span>⌂</span>Home</a>
+  <a href="#" class="tb-item"><span>⌕</span>Search</a>
+  <a href="#" class="tb-add" aria-label="New">+</a>
+  <a href="#" class="tb-item"><span>♡</span>Saved</a>
+  <a href="#" class="tb-item"><span>☺</span>Profile</a>
+</nav>`,
+css:`.tb{display:flex;align-items:center;justify-content:space-around;width:min(380px,100%);padding:10px 12px;border-radius:26px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(255,255,255,.7);box-shadow:0 12px 30px rgba(40,40,90,.18);font:11px/1 system-ui,sans-serif}
+.tb-item{display:flex;flex-direction:column;align-items:center;gap:5px;color:#5d5f7a;text-decoration:none;padding:6px 10px;border-radius:14px}
+.tb-item span{font-size:20px}
+.tb-item.active{color:#3b3dbf;background:rgba(255,255,255,.7)}
+.tb-add{width:46px;height:46px;border-radius:50%;background:#3b3dbf;color:#fff;display:grid;place-items:center;font-size:26px;text-decoration:none;box-shadow:0 6px 16px rgba(59,61,191,.4)}`},
+{t:'Centered Logo Nav',c:'Navbars',k:'editorial',bg:BG.sand,body:TOP,desc:'A boutique-style header with the logo in the middle and links on both sides. Built for shops and magazines.',
+html:`<nav class="cl">
+  <div class="cl-side"><a href="#">Shop</a><a href="#">Journal</a><a href="#">About</a></div>
+  <a class="cl-logo" href="#">Maison Ode</a>
+  <div class="cl-side cl-right"><a href="#">Search</a><a href="#">Account</a><a href="#">Bag (2)</a></div>
+</nav>`,
+css:`.cl{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;box-sizing:border-box;padding:22px 34px;border-bottom:1px solid #d9cdb4;font:13px/1 Georgia,serif;letter-spacing:.06em;text-transform:uppercase}
+.cl-side{display:flex;gap:26px}
+.cl-right{justify-content:flex-end}
+.cl a{color:#3a3122;text-decoration:none}
+.cl a:hover{text-decoration:underline;text-underline-offset:4px}
+.cl-logo{font-size:26px;letter-spacing:0;text-transform:none;font-style:italic}
+@media (max-width:720px){.cl-side a:not(:last-child){display:none}}`},
+{t:'Hamburger Nav',c:'Navbars',k:'no JS',open:true,bg:BG.light,body:TOP,desc:'A responsive navbar whose hamburger animates into an ✕ and drops a full menu. It works without JavaScript (checkbox toggle) and shows inline links above 960px.',
+html:`<nav class="hb">
+  <a class="hb-logo" href="#">Fieldwork</a>
+  <input type="checkbox" id="hb-toggle" class="hb-toggle">
+  <label for="hb-toggle" class="hb-btn" aria-label="Toggle menu"><span></span></label>
+  <ul class="hb-menu">
+    <li><a href="#">Work</a></li><li><a href="#">Services</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li>
+  </ul>
+</nav>`,
+css:`.hb{position:relative;display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box;padding:18px 28px;background:#fff;border-bottom:1px solid #e7e7e2;font:15px/1 system-ui,sans-serif}
+.hb-logo{font-weight:700;color:#111;text-decoration:none}
+.hb-toggle{position:absolute;opacity:0;pointer-events:none}
+.hb-btn{width:40px;height:40px;display:grid;place-items:center;cursor:pointer;border-radius:8px}
+.hb-btn span,.hb-btn span::before,.hb-btn span::after{content:"";display:block;width:20px;height:2px;background:#111;border-radius:2px;transition:transform .25s,background .25s}
+.hb-btn span{position:relative}
+.hb-btn span::before{position:absolute;top:-6px}
+.hb-btn span::after{position:absolute;top:6px}
+.hb-toggle:checked+.hb-btn span{background:transparent}
+.hb-toggle:checked+.hb-btn span::before{transform:translateY(6px) rotate(45deg)}
+.hb-toggle:checked+.hb-btn span::after{transform:translateY(-6px) rotate(-45deg)}
+.hb-toggle:focus-visible+.hb-btn{outline:2px solid #4f6bff}
+.hb-menu{position:absolute;top:100%;left:0;right:0;margin:0;padding:8px 28px 18px;list-style:none;background:#fff;border-bottom:1px solid #e7e7e2;display:none}
+.hb-toggle:checked~.hb-menu{display:block}
+.hb-menu a{display:block;padding:14px 0;color:#111;text-decoration:none;font-size:22px;border-bottom:1px solid #f0f0ec}
+@media (min-width:960px){
+  .hb-btn{display:none}
+  .hb-menu{position:static;display:flex;gap:28px;padding:0;border:0;background:none}
+  .hb-menu a{font-size:15px;padding:0;border:0;color:#555}
+}`},
+{t:'Dropdown Menu',c:'Menus',k:'<details>',open:true,bg:BG.light,body:'align-items:flex-start;padding-top:60px',desc:'An accessible dropdown built on the native <details> element, with keyboard shortcuts, a divider and a destructive action. No JavaScript.',
+html:`<details class="dd">
+  <summary class="dd-btn">Options <span aria-hidden="true">▾</span></summary>
+  <div class="dd-panel" role="menu">
+    <a href="#" role="menuitem">Edit <kbd>⌘E</kbd></a>
+    <a href="#" role="menuitem">Duplicate <kbd>⌘D</kbd></a>
+    <a href="#" role="menuitem">Share…</a>
+    <hr>
+    <a href="#" role="menuitem" class="dd-danger">Delete <kbd>⌫</kbd></a>
+  </div>
+</details>`,
+css:`.dd{position:relative;display:inline-block;font:14px/1 system-ui,sans-serif}
+.dd-btn{list-style:none;cursor:pointer;display:inline-flex;gap:10px;align-items:center;padding:11px 16px;border:1px solid #dcdcd6;border-radius:10px;background:#fff;color:#111;user-select:none}
+.dd-btn::-webkit-details-marker{display:none}
+.dd[open] .dd-btn{border-color:#111}
+.dd-panel{position:absolute;top:calc(100% + 8px);left:0;min-width:220px;padding:6px;background:#fff;border:1px solid #e4e4df;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.12)}
+.dd-panel a{display:flex;justify-content:space-between;padding:10px 12px;border-radius:8px;color:#222;text-decoration:none}
+.dd-panel a:hover{background:#f2f2ee}
+.dd-panel kbd{font:12px ui-monospace,monospace;color:#999}
+.dd-panel hr{border:0;border-top:1px solid #eee;margin:6px 0}
+.dd-panel .dd-danger{color:#d63c3c}`},
+{t:'Mega Menu',c:'Menus',k:'<details>',tag:'POPULAR',open:true,bg:BG.light,body:TOP,desc:'A full-width product mega menu with grouped links, descriptions and a highlighted feature tile.',
+html:`<nav class="mm">
+  <a class="mm-logo" href="#">Kite</a>
+  <details class="mm-item">
+    <summary>Products</summary>
+    <div class="mm-panel">
+      <div><h4>Build</h4>
+        <a href="#"><b>Editor</b><span>Write and design together</span></a>
+        <a href="#"><b>Components</b><span>Reusable blocks for teams</span></a></div>
+      <div><h4>Ship</h4>
+        <a href="#"><b>Hosting</b><span>Global edge in one click</span></a>
+        <a href="#"><b>Analytics</b><span>Privacy-first insights</span></a></div>
+      <a class="mm-feature" href="#"><small>New</small><b>Kite AI</b><span>Draft pages from a sentence →</span></a>
+    </div>
+  </details>
+  <a href="#">Pricing</a><a href="#">Docs</a>
+</nav>`,
+css:`.mm{position:relative;display:flex;align-items:center;gap:28px;width:100%;box-sizing:border-box;padding:18px 32px;background:#fff;border-bottom:1px solid #e8e8e3;font:14px/1.3 system-ui,sans-serif}
+.mm>a,.mm summary{color:#333;text-decoration:none;cursor:pointer}
+.mm .mm-logo{font-weight:800;font-size:18px;color:#111;margin-right:12px}
+.mm summary{list-style:none}
+.mm summary::-webkit-details-marker{display:none}
+.mm summary::after{content:" ▾";color:#999}
+.mm-panel{position:absolute;left:24px;right:24px;top:calc(100% + 8px);display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:24px;padding:24px;background:#fff;border:1px solid #e8e8e3;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.1)}
+.mm-panel h4{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#999}
+.mm-panel a{display:block;padding:10px;border-radius:10px;color:#111;text-decoration:none}
+.mm-panel a:hover{background:#f4f4f0}
+.mm-panel span{display:block;color:#888;font-size:13px}
+.mm-panel .mm-feature{padding:18px;background:linear-gradient(135deg,#eef0ff,#fdeefc)}
+.mm-feature small{color:#5b5bd6;font-weight:600}`},
+{t:'Context Menu',c:'Menus',k:'glass',bg:BG.dark,desc:'A macOS-style right-click menu: translucent, with shortcuts, separators and a submenu hint.',
+html:`<ul class="cm" role="menu">
+  <li role="menuitem">Open <kbd>↵</kbd></li>
+  <li role="menuitem">Open in new tab <kbd>⌘↵</kbd></li>
+  <li role="separator"></li>
+  <li role="menuitem">Copy link <kbd>⌘C</kbd></li>
+  <li role="menuitem">Rename… <kbd>F2</kbd></li>
+  <li role="menuitem">Move to <span>›</span></li>
+  <li role="separator"></li>
+  <li role="menuitem" class="cm-danger">Delete <kbd>⌫</kbd></li>
+</ul>`,
+css:`.cm{list-style:none;margin:0;padding:6px;min-width:230px;background:rgba(40,41,46,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.45);color:#ececee;font:13px/1 system-ui,sans-serif}
+.cm li[role=menuitem]{display:flex;justify-content:space-between;gap:24px;padding:9px 10px;border-radius:7px;cursor:default}
+.cm li[role=menuitem]:hover{background:#3d6cf5}
+.cm kbd,.cm span{font:12px ui-monospace,monospace;color:#8d8e96}
+.cm li:hover kbd{color:#dfe6ff}
+.cm li[role=separator]{height:1px;background:rgba(255,255,255,.1);margin:5px 4px}
+.cm .cm-danger{color:#ff6b6b}
+.cm .cm-danger:hover{background:#d63c3c;color:#fff}`},
+{t:'Command Palette',c:'Menus',k:'⌘K',tag:'NEW',bg:'linear-gradient(#e9e9f2,#d9dae8)',desc:'A ⌘K-style command menu with a search field, grouped results and shortcut hints.',
+html:`<div class="cp" role="dialog" aria-label="Command menu">
+  <label class="cp-search"><span>⌕</span><input placeholder="Type a command or search…"><kbd>esc</kbd></label>
+  <p class="cp-group">Suggestions</p>
+  <a class="cp-row active" href="#"><span>✦</span>New document<kbd>⌘N</kbd></a>
+  <a class="cp-row" href="#"><span>⚙</span>Open settings<kbd>⌘,</kbd></a>
+  <p class="cp-group">Navigation</p>
+  <a class="cp-row" href="#"><span>→</span>Go to inbox</a>
+  <a class="cp-row" href="#"><span>→</span>Go to projects</a>
+</div>`,
+css:`.cp{width:min(520px,100%);background:#fff;border-radius:16px;box-shadow:0 30px 70px rgba(30,30,60,.25);overflow:hidden;font:14px/1 system-ui,sans-serif;color:#1d1d24;padding-bottom:8px}
+.cp-search{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #ececf2}
+.cp-search span{color:#999;font-size:18px}
+.cp-search input{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:none}
+.cp kbd{margin-left:auto;font:11px ui-monospace,monospace;color:#888;background:#f2f2f6;padding:4px 6px;border-radius:5px}
+.cp-group{margin:12px 18px 6px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9a9aa8}
+.cp-row{display:flex;align-items:center;gap:12px;margin:0 8px;padding:11px 10px;border-radius:9px;color:inherit;text-decoration:none}
+.cp-row span{width:20px;text-align:center;color:#888}
+.cp-row:hover,.cp-row.active{background:#f0f0ff;color:#4338ca}`},
+{t:'Slide-out Drawer',c:'Menus',k:'no JS',open:true,bg:BG.light,desc:'An off-canvas side menu that slides in over a dimmed overlay. Clicking the overlay or the ✕ closes it. Pure CSS.',
+html:`<input type="checkbox" id="dr-toggle" class="dr-toggle">
+<label for="dr-toggle" class="dr-open">☰ Menu</label>
+<label for="dr-toggle" class="dr-overlay" aria-hidden="true"></label>
+<aside class="dr">
+  <label for="dr-toggle" class="dr-close" aria-label="Close menu">✕</label>
+  <a href="#">Home</a><a href="#">Shop</a><a href="#">Collections</a><a href="#">Journal</a><a href="#">Contact</a>
+  <p class="dr-foot">hello@studio.com</p>
+</aside>`,
+css:`.dr-toggle{position:absolute;opacity:0;pointer-events:none}
+.dr-open{cursor:pointer;padding:12px 18px;border:1px solid #ddd;border-radius:999px;background:#fff;font:14px system-ui,sans-serif}
+.dr-toggle:focus-visible~.dr-open{outline:2px solid #4f6bff}
+.dr-overlay{position:fixed;inset:0;background:rgba(15,15,20,.4);opacity:0;pointer-events:none;transition:opacity .3s}
+.dr{position:fixed;top:0;left:0;bottom:0;width:min(320px,85vw);box-sizing:border-box;padding:28px;background:#fff;display:flex;flex-direction:column;gap:6px;transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.8,.2,1);font:26px/1.2 Georgia,serif;box-shadow:20px 0 50px rgba(0,0,0,.15)}
+.dr a{color:#111;text-decoration:none;padding:8px 0}
+.dr a:hover{font-style:italic}
+.dr-close{align-self:flex-end;cursor:pointer;font:18px system-ui;margin-bottom:20px}
+.dr-foot{margin-top:auto;font:13px system-ui,sans-serif;color:#888}
+.dr-toggle:checked~.dr{transform:none}
+.dr-toggle:checked~.dr-overlay{opacity:1;pointer-events:auto}`},
+{t:'Glass Dropdown',c:'Menus',k:'liquid glass',open:true,bg:BG.vivid,body:'align-items:flex-start;padding-top:56px',desc:'A workspace switcher where both the trigger and the panel are frosted glass.',
+html:`<details class="gd">
+  <summary>✦ Workspace <span>▾</span></summary>
+  <div class="gd-panel">
+    <a href="#"><i style="background:#ff7ab6"></i>Personal</a>
+    <a href="#" class="on"><i style="background:#6a8bff"></i>Studio Lumen</a>
+    <a href="#"><i style="background:#ffd36a"></i>Side projects</a>
+    <hr><a href="#">+ New workspace</a>
+  </div>
+</details>`,
+css:`.gd{position:relative;font:14px/1 system-ui,sans-serif;color:#fff}
+.gd summary,.gd-panel{
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 10px 30px rgba(0,0,0,.25);
+}
+.gd summary{list-style:none;cursor:pointer;display:flex;gap:10px;padding:12px 18px;border-radius:999px}
+.gd summary::-webkit-details-marker{display:none}
+.gd-panel{position:absolute;top:calc(100% + 10px);left:0;min-width:230px;padding:6px;border-radius:18px}
+.gd-panel a{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;color:#fff;text-decoration:none}
+.gd-panel a:hover,.gd-panel .on{background:rgba(255,255,255,.18)}
+.gd-panel i{width:10px;height:10px;border-radius:50%}
+.gd-panel hr{border:0;border-top:1px solid rgba(255,255,255,.2);margin:6px}`},
+{t:'Liquid Glass Buttons',c:'Buttons',k:'backdrop-filter',tag:'POPULAR',bg:BG.vivid,desc:'Glossy glass pill buttons with a sheen on top, a tinted variant and an icon button. They lift on hover and press in on click.',
+html:`<div class="lgb-row">
+  <button class="lgb">Continue</button>
+  <button class="lgb lgb-tint">Upgrade ✦</button>
+  <button class="lgb lgb-icon" aria-label="Play">▶</button>
+</div>`,
+css:`.lgb-row{display:flex;gap:14px;align-items:center}
+.lgb{position:relative;padding:14px 26px;border-radius:999px;border:1px solid rgba(255,255,255,.35);
+  background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.08));
+  backdrop-filter:blur(14px) saturate(180%);
+  -webkit-backdrop-filter:blur(14px) saturate(180%);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.6),inset 0 -6px 14px rgba(255,255,255,.08),0 8px 24px rgba(0,0,0,.25);
+  color:#fff;font:600 15px/1 system-ui,sans-serif;cursor:pointer;transition:transform .15s,box-shadow .2s}
+/* the glossy highlight on the upper half */
+.lgb::before{content:"";position:absolute;inset:1px 12% auto;height:45%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.45),transparent);pointer-events:none}
+.lgb:hover{transform:translateY(-1px);box-shadow:inset 0 1px 1px rgba(255,255,255,.7),0 12px 30px rgba(0,0,0,.3)}
+.lgb:active{transform:scale(.97)}
+.lgb-tint{background:linear-gradient(180deg,rgba(120,140,255,.55),rgba(90,100,255,.25))}
+.lgb-icon{width:50px;height:50px;padding:0}`},
+{t:'Gradient Glow Button',c:'Buttons',k:'@property',bg:BG.dark,desc:'A button with a rotating rainbow border and a soft glow, animated with @property. Respects reduced-motion settings.',
+html:`<a class="glow" href="#"><span>Start building →</span></a>`,
+css:`@property --glow-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.glow{position:relative;isolation:isolate;display:inline-block;padding:2px;border-radius:14px;text-decoration:none;
+  background:conic-gradient(from var(--glow-angle),#ff4fd8,#6a8bff,#38f9d7,#ffd36a,#ff4fd8);
+  animation:glow-spin 4s linear infinite}
+.glow::after{content:"";position:absolute;inset:0;border-radius:inherit;background:inherit;filter:blur(18px);opacity:.6;z-index:-1}
+.glow span{display:block;padding:15px 28px;border-radius:12px;background:#111214;color:#fff;font:600 15px/1 system-ui,sans-serif}
+@keyframes glow-spin{to{--glow-angle:360deg}}
+@media (prefers-reduced-motion:reduce){.glow{animation:none}}`},
+{t:'Neumorphic Buttons',c:'Buttons',k:'soft UI',bg:BG.neu,desc:'Soft buttons that look pressed out of the background, with a pressed state and a round icon button.',
+html:`<div class="neu-row">
+  <button class="neu">Soft</button>
+  <button class="neu neu-pressed">Pressed</button>
+  <button class="neu neu-round" aria-label="Power">⏻</button>
+</div>`,
+css:`.neu-row{display:flex;gap:22px;align-items:center}
+.neu{padding:16px 30px;border:0;border-radius:16px;background:#e6e9ef;color:#5a6275;font:600 15px/1 system-ui,sans-serif;box-shadow:8px 8px 16px #c4c8d0,-8px -8px 16px #fff;cursor:pointer;transition:box-shadow .2s}
+.neu:active,.neu-pressed{box-shadow:inset 6px 6px 12px #c4c8d0,inset -6px -6px 12px #fff}
+.neu-round{width:60px;height:60px;padding:0;border-radius:50%;font-size:20px;color:#6a8bff}`},
+{t:'Brutalist Buttons',c:'Buttons',k:'hard shadow',bg:'#f6f1e7',desc:'Loud buttons with thick borders and hard offset shadows. They pop up on hover and slam down on click.',
+html:`<div class="br-row">
+  <button class="br">Click me</button>
+  <button class="br br-pink">Subscribe</button>
+  <button class="br br-dark">→</button>
+</div>`,
+css:`.br-row{display:flex;gap:18px}
+.br{padding:14px 24px;border:3px solid #111;border-radius:0;background:#ffe14d;color:#111;font:800 16px/1 ui-monospace,Menlo,monospace;text-transform:uppercase;box-shadow:5px 5px 0 #111;cursor:pointer;transition:transform .08s,box-shadow .08s}
+.br:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #111}
+.br:active{transform:translate(5px,5px);box-shadow:0 0 0 #111}
+.br-pink{background:#ff8fd0}
+.br-dark{background:#111;color:#fff}`},
+{t:'Glass Profile Card',c:'Cards',k:'liquid glass',bg:BG.vivid,desc:'A frosted profile card with a gradient avatar, a stats row and a follow button.',
+html:`<article class="gc">
+  <div class="gc-avatar">ML</div>
+  <h3>Mara Lindqvist</h3>
+  <p>Product designer · Stockholm</p>
+  <div class="gc-stats"><div><b>128</b>Projects</div><div><b>4.9k</b>Followers</div><div><b>32</b>Awards</div></div>
+  <a class="gc-btn" href="#">Follow</a>
+</article>`,
+css:`.gc{width:300px;padding:28px;border-radius:28px;text-align:center;color:#fff;font:14px/1.4 system-ui,sans-serif;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 20px 50px rgba(0,0,0,.3)}
+.gc-avatar{width:72px;height:72px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:22px;background:linear-gradient(135deg,#ff7ab6,#6a8bff);box-shadow:0 0 0 4px rgba(255,255,255,.25)}
+.gc h3{margin:0;font-size:20px}
+.gc p{margin:4px 0 20px;opacity:.75}
+.gc-stats{display:flex;justify-content:space-around;padding:14px 0;border-block:1px solid rgba(255,255,255,.18);font-size:12px;opacity:.9}
+.gc-stats b{display:block;font-size:18px}
+.gc-btn{display:block;margin-top:20px;padding:12px;border-radius:999px;background:#fff;color:#1c1b2e;text-decoration:none;font-weight:600}`},
+{t:'Pricing Cards',c:'Cards',k:'flexbox',bg:BG.light,desc:'Two pricing tiers with a highlighted “Most popular” plan and feature checklists.',
+html:`<div class="pc-row">
+  <article class="pc">
+    <h3>Starter</h3><p class="pc-price">€0<span>/mo</span></p>
+    <ul><li>3 projects</li><li>Community support</li><li>Basic analytics</li></ul>
+    <a href="#" class="pc-btn">Get started</a>
+  </article>
+  <article class="pc pc-hot">
+    <span class="pc-tag">Most popular</span>
+    <h3>Pro</h3><p class="pc-price">€12<span>/mo</span></p>
+    <ul><li>Unlimited projects</li><li>Priority support</li><li>Custom domains</li></ul>
+    <a href="#" class="pc-btn">Start free trial</a>
+  </article>
+</div>`,
+css:`.pc-row{display:flex;gap:18px;align-items:stretch}
+.pc{position:relative;width:240px;padding:26px;border:1px solid #e3e3de;border-radius:18px;background:#fff;font:14px/1.5 system-ui,sans-serif;color:#222;display:flex;flex-direction:column}
+.pc h3{margin:0;font-size:15px;color:#777;font-weight:600}
+.pc-price{margin:8px 0 16px;font-size:40px;font-weight:800;letter-spacing:-.03em}
+.pc-price span{font-size:14px;font-weight:400;color:#999}
+.pc ul{list-style:none;padding:0;margin:0 0 22px;flex:1}
+.pc li{padding:6px 0;border-bottom:1px dashed #eee}
+.pc li::before{content:"✓  ";color:#3c9d5d}
+.pc-btn{text-align:center;padding:12px;border-radius:10px;border:1px solid #ddd;color:#111;text-decoration:none;font-weight:600}
+.pc-hot{background:#111;color:#f2f2f2;border-color:#111}
+.pc-hot h3{color:#aaa}
+.pc-hot li{border-color:#2a2a2a}
+.pc-hot .pc-btn{background:#d6fa78;border-color:#d6fa78;color:#111}
+.pc-tag{position:absolute;top:-11px;right:18px;background:#d6fa78;color:#111;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px}`},
+{t:'Bento Grid',c:'Cards',k:'CSS grid',tag:'NEW',bg:'#f1f0ec',desc:'A bento-box feature grid with a chart tile, a stat tile, an accent tile and a wide row of tags.',
+html:`<section class="bento">
+  <div class="b b-big"><small>Analytics</small><h3>Know what works.</h3>
+    <div class="b-bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:50%"></i><i style="height:85%"></i><i style="height:70%"></i></div></div>
+  <div class="b b-dark"><small>Speed</small><h3>0.4s</h3><p>median load time</p></div>
+  <div class="b b-lime"><small>Uptime</small><h3>99.99%</h3></div>
+  <div class="b b-wide"><small>Integrations</small>
+    <div class="b-chips"><span>Chat</span><span>Docs</span><span>Design</span><span>Issues</span></div></div>
+</section>`,
+css:`.bento{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:150px 120px;gap:12px;width:min(640px,100%);font:14px/1.3 system-ui,sans-serif}
+.b{border-radius:20px;padding:18px;background:#fff;border:1px solid #e4e3dd;display:flex;flex-direction:column;overflow:hidden}
+.b small{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#999}
+.b h3{margin:6px 0 0;font-size:26px;letter-spacing:-.03em}
+.b p{margin:2px 0 0;color:#888}
+.b-big{grid-row:span 2}
+.b-bars{margin-top:auto;display:flex;align-items:flex-end;gap:8px;height:120px}
+.b-bars i{flex:1;background:linear-gradient(#6a8bff,#a5b6ff);border-radius:6px 6px 2px 2px}
+.b-dark{background:#151515;color:#fff;border-color:#151515}
+.b-lime{background:#d6fa78;border-color:#d6fa78}
+.b-lime small{color:#4d5f1c}
+.b-wide{grid-column:span 2}
+.b-chips{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}
+.b-chips span{padding:7px 12px;border-radius:99px;background:#f2f2ee;font-size:13px}`},
+{t:'Liquid Glass Kit',c:'CSS Kits',k:'liquid-glass.css',file:'liquid-glass.css',tag:'POPULAR',bg:BG.vivid,desc:'A drop-in glass utility file. Add .glass to anything, then stack modifiers: -strong, -subtle, -dark, -pill, -btn. Everything is tunable with CSS variables, and browsers without backdrop-filter get a solid fallback.',
+html:`<div class="glass" style="padding:28px;width:340px">
+  <h3 style="margin:0 0 6px;font:600 20px system-ui">Liquid glass</h3>
+  <p style="margin:0 0 18px;opacity:.8;font:14px/1.5 system-ui">Stack .glass with modifiers: -strong, -subtle, -dark, -pill.</p>
+  <div style="display:flex;gap:10px">
+    <button class="glass glass-pill glass-btn">Primary</button>
+    <button class="glass glass-dark glass-pill glass-btn">Dark</button>
+  </div>
+</div>`,
+css:`/* liquid-glass.css — drop-in frosted, light-catching glass utilities */
+:root{
+  --glass-tint:255 255 255;
+  --glass-alpha:.14;
+  --glass-blur:18px;
+  --glass-border:rgba(255,255,255,.28);
+  --glass-highlight:rgba(255,255,255,.5);
+  --glass-shadow:0 10px 30px rgba(0,0,0,.25);
+  --glass-radius:24px;
+}
+.glass{
+  position:relative;
+  background:rgb(var(--glass-tint) / var(--glass-alpha));
+  backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--glass-radius);
+  box-shadow:inset 0 1px 0 var(--glass-highlight),inset 0 -1px 0 rgba(255,255,255,.08),var(--glass-shadow);
+  color:#fff;
+}
+/* soft sheen across the top edge */
+.glass::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 40%);
+}
+.glass-strong{--glass-alpha:.24;--glass-blur:28px}
+.glass-subtle{--glass-alpha:.07;--glass-blur:10px}
+.glass-dark{--glass-tint:20 20 30;--glass-alpha:.35;--glass-border:rgba(255,255,255,.12)}
+.glass-pill{--glass-radius:999px}
+.glass-btn{font:600 15px/1 system-ui,sans-serif;padding:13px 22px;cursor:pointer;transition:transform .15s,background .2s}
+.glass-btn:hover{--glass-alpha:.22;transform:translateY(-1px)}
+.glass-btn:active{transform:scale(.97)}
+@supports not (backdrop-filter:blur(1px)){
+  .glass{background:rgb(var(--glass-tint) / .85);color:#111}
+}`},
+{t:'Neumorphism Kit',c:'CSS Kits',k:'neumorphism.css',file:'neumorphism.css',bg:BG.neu,desc:'Soft UI on a single base colour: raised and inset surfaces, buttons, inputs and a toggle switch. Change --neu-bg and the shadow variables to retheme it.',
+html:`<div class="neu-raised" style="padding:28px;display:grid;gap:18px;width:300px">
+  <input class="neu-inset neu-input" placeholder="Search…">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="neu-raised neu-btn">Save</button>
+    <input type="checkbox" class="neu-toggle" checked aria-label="Toggle">
+  </div>
+</div>`,
+css:`/* neumorphism.css — soft UI on a single base colour */
+:root{
+  --neu-bg:#e6e9ef;
+  --neu-dark:#c4c8d0;
+  --neu-light:#ffffff;
+  --neu-text:#5a6275;
+  --neu-accent:#6a8bff;
+  --neu-distance:8px;
+  --neu-blur:16px;
+  --neu-radius:18px;
+}
+.neu-surface{background:var(--neu-bg);color:var(--neu-text)}
+.neu-raised{
+  background:var(--neu-bg);border-radius:var(--neu-radius);
+  box-shadow:var(--neu-distance) var(--neu-distance) var(--neu-blur) var(--neu-dark),
+             calc(var(--neu-distance) * -1) calc(var(--neu-distance) * -1) var(--neu-blur) var(--neu-light);
+}
+.neu-inset{
+  background:var(--neu-bg);border-radius:var(--neu-radius);
+  box-shadow:inset 6px 6px 12px var(--neu-dark),inset -6px -6px 12px var(--neu-light);
+}
+.neu-btn{border:0;padding:14px 26px;color:var(--neu-text);font:600 15px/1 system-ui,sans-serif;cursor:pointer;transition:box-shadow .2s}
+.neu-btn:active{box-shadow:inset 6px 6px 12px var(--neu-dark),inset -6px -6px 12px var(--neu-light)}
+.neu-input{border:0;outline:0;padding:14px 18px;color:var(--neu-text);font:15px system-ui,sans-serif}
+.neu-toggle{appearance:none;margin:0;width:56px;height:30px;border-radius:99px;background:var(--neu-bg);box-shadow:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);position:relative;cursor:pointer}
+.neu-toggle::after{content:"";position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:var(--neu-bg);box-shadow:3px 3px 6px var(--neu-dark),-3px -3px 6px var(--neu-light);transition:transform .25s,background .25s}
+.neu-toggle:checked::after{transform:translateX(26px);background:var(--neu-accent)}`},
+{t:'Aurora Kit',c:'CSS Kits',k:'aurora.css',file:'aurora.css',tag:'NEW',bg:'#0b0b14',body:FULL,desc:'A slowly drifting northern-lights background plus animated gradient text. Put .aurora on any section and .aurora-text on headings.',
+html:`<section class="aurora" style="height:100vh;display:grid;place-items:center;text-align:center;font-family:system-ui">
+  <div>
+    <p style="margin:0;opacity:.6;letter-spacing:.2em;font-size:12px">INTRODUCING</p>
+    <h1 class="aurora-text" style="margin:8px 0;font-size:64px;letter-spacing:-.04em">Northern Lights</h1>
+    <p style="opacity:.7;margin:0">A background that never sits still.</p>
+  </div>
+</section>`,
+css:`/* aurora.css — animated gradient backdrop + gradient text */
+.aurora{position:relative;isolation:isolate;overflow:hidden;background:#0b0b14;color:#fff}
+.aurora::before{
+  content:"";position:absolute;inset:-40%;z-index:-1;
+  background:
+    radial-gradient(40% 40% at 30% 30%,rgba(120,90,255,.65),transparent 70%),
+    radial-gradient(35% 35% at 70% 40%,rgba(0,220,200,.5),transparent 70%),
+    radial-gradient(40% 40% at 50% 75%,rgba(255,80,180,.45),transparent 70%);
+  filter:blur(40px);
+  animation:aurora-drift 14s ease-in-out infinite alternate;
+}
+@keyframes aurora-drift{
+  0%{transform:translate(0,0) rotate(0deg)}
+  50%{transform:translate(5%,-4%) rotate(20deg)}
+  100%{transform:translate(-4%,5%) rotate(-15deg)}
+}
+.aurora-text{
+  background:linear-gradient(90deg,#b8a6ff,#5ef0d8,#ff8fd0,#b8a6ff);
+  background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:aurora-text 8s linear infinite;
+}
+@keyframes aurora-text{to{background-position:300% 0}}
+@media (prefers-reduced-motion:reduce){.aurora::before,.aurora-text{animation:none}}`},
+{t:'Brutalism Kit',c:'CSS Kits',k:'brutalism.css',file:'brutalism.css',bg:'#f6f1e7',desc:'Hard edges, loud colour, honest shadows. Boxes, buttons, tags and inputs that share one set of variables.',
+html:`<div class="br-box" style="padding:24px;width:340px">
+  <span class="br-tag">New</span>
+  <h3 style="margin:12px 0 6px;font-size:24px">NEWSLETTER.</h3>
+  <p style="margin:0 0 16px">No fluff. One email a week.</p>
+  <div style="display:flex;gap:10px">
+    <input class="br-input" placeholder="you@mail.com" style="flex:1;min-width:0">
+    <button class="br-btn">Join</button>
+  </div>
+</div>`,
+css:`/* brutalism.css — hard edges, loud colour, honest shadows */
+:root{
+  --br-ink:#111;
+  --br-paper:#f6f1e7;
+  --br-yellow:#ffe14d;
+  --br-pink:#ff8fd0;
+  --br-blue:#7ab8ff;
+  --br-border:3px;
+  --br-shadow:6px;
+}
+.br-box{background:#fff;border:var(--br-border) solid var(--br-ink);box-shadow:var(--br-shadow) var(--br-shadow) 0 var(--br-ink);font-family:ui-monospace,Menlo,monospace;color:var(--br-ink)}
+.br-btn{padding:12px 20px;border:var(--br-border) solid var(--br-ink);background:var(--br-yellow);box-shadow:4px 4px 0 var(--br-ink);font:800 14px/1 ui-monospace,Menlo,monospace;text-transform:uppercase;cursor:pointer;transition:transform .08s,box-shadow .08s}
+.br-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--br-ink)}
+.br-btn:active{transform:translate(4px,4px);box-shadow:none}
+.br-tag{display:inline-block;padding:4px 8px;border:2px solid var(--br-ink);background:var(--br-pink);font:700 11px ui-monospace,monospace;text-transform:uppercase}
+.br-input{padding:12px;border:var(--br-border) solid var(--br-ink);font:14px ui-monospace,monospace;outline:0}
+.br-input:focus{box-shadow:4px 4px 0 var(--br-blue)}`},
+{t:'Claymorphism Kit',c:'CSS Kits',k:'claymorphism.css',file:'claymorphism.css',bg:'#fde9ef',desc:'Puffy, inflated 3D surfaces built from layered inner and outer shadows: cards, buttons and icon tiles.',
+html:`<div class="clay" style="padding:28px;width:300px;font-family:system-ui;color:#5b3a46;text-align:center">
+  <div class="clay-icon" style="margin:0 auto 14px">☁</div>
+  <h3 style="margin:0 0 6px">Cloud sync</h3>
+  <p style="margin:0 0 20px;opacity:.75;font-size:14px">Your files, everywhere. Softly.</p>
+  <button class="clay-btn">Turn on</button>
+</div>`,
+css:`/* claymorphism.css — puffy, inflated 3D surfaces */
+:root{
+  --clay-bg:#fff4f7;
+  --clay-shadow:rgba(214,120,150,.35);
+  --clay-radius:32px;
+}
+.clay{
+  background:var(--clay-bg);border-radius:var(--clay-radius);
+  box-shadow:0 18px 36px var(--clay-shadow),inset -8px -8px 16px rgba(0,0,0,.06),inset 8px 8px 16px rgba(255,255,255,.9);
+}
+.clay-btn{
+  border:0;padding:15px 28px;border-radius:999px;cursor:pointer;
+  background:linear-gradient(180deg,#ff9fbf,#ff6f9c);color:#fff;font:700 15px/1 system-ui,sans-serif;
+  box-shadow:0 10px 20px rgba(255,111,156,.45),inset 0 -5px 10px rgba(0,0,0,.12),inset 0 5px 10px rgba(255,255,255,.45);
+  transition:transform .15s;
+}
+.clay-btn:hover{transform:translateY(-2px)}
+.clay-btn:active{transform:translateY(1px) scale(.98)}
+.clay-icon{width:64px;height:64px;border-radius:22px;display:grid;place-items:center;font-size:28px;color:#fff;
+  background:linear-gradient(160deg,#b9c8ff,#7f95ff);
+  box-shadow:0 12px 22px rgba(127,149,255,.45),inset 0 -6px 10px rgba(0,0,0,.12),inset 0 6px 10px rgba(255,255,255,.5)}`},
+{t:'Film Grain Kit',c:'CSS Kits',k:'grain.css',file:'grain.css',bg:'#c94b7d',body:FULL,desc:'Adds a subtle film-grain texture over flat gradients, so they don’t band and feel more printed. Pure CSS with an inline SVG noise image.',
+html:`<div class="grain" style="height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#ff9a62,#c94b7d 60%,#3b2a6b);color:#fff;font:700 56px/1 Georgia,serif;letter-spacing:-.03em">Warm grain.</div>`,
+css:`/* grain.css — film-grain overlay for flat gradients */
+.grain{position:relative;isolation:isolate}
+.grain::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  opacity:var(--grain-opacity,.18);mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.grain-strong{--grain-opacity:.32}
+.grain-soft{--grain-opacity:.1}`},
+{t:'Theme Tokens Kit',c:'CSS Kits',k:'theme-tokens.css',file:'theme-tokens.css',bg:BG.light,desc:'A starter set of light and dark design tokens. Follows the system setting, and can be flipped by hand with data-theme="dark" or "light" on <html>.',
+html:`<div class="card" style="width:320px;font-family:system-ui">
+  <h3 style="margin:0 0 6px">Theme tokens</h3>
+  <p class="muted" style="margin:0 0 18px;font-size:14px">Follows the system. Click to flip it.</p>
+  <button class="btn" onclick="const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'">Toggle theme</button>
+</div>`,
+css:`/* theme-tokens.css — light & dark design tokens with system + manual switch */
+:root{
+  --bg:#f7f7f4;--surface:#ffffff;--text:#1f201c;--muted:#76776f;--border:#e6e6e0;--accent:#4f6bff;
+  --radius:14px;--shadow:0 8px 24px rgba(0,0,0,.08);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121311;--surface:#1c1d1a;--text:#ecece6;--muted:#9a9b93;--border:#2c2d29;--accent:#8ea0ff;
+    --shadow:0 8px 24px rgba(0,0,0,.4);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121311;--surface:#1c1d1a;--text:#ecece6;--muted:#9a9b93;--border:#2c2d29;--accent:#8ea0ff;
+  --shadow:0 8px 24px rgba(0,0,0,.4);color-scheme:dark;
+}
+body{background:var(--bg);color:var(--text);transition:background .25s,color .25s}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+.muted{color:var(--muted)}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:calc(var(--radius) - 4px);padding:11px 18px;font:600 14px system-ui,sans-serif;cursor:pointer}`}];
+const byC=t=>COMPS.find(x=>x.t===t);
+const cssOf=x=>(x.css.startsWith('/*')?'':`/* ${x.t} · good form */\n`)+x.css.trim()+'\n';
+// demo=true shows <details>/checkbox components in their open state so the preview isn't an empty bar
+const cdoc=(x,demo)=>`<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${x.t}</title>\n<style>body{margin:0;min-height:100vh;box-sizing:border-box;padding:32px;display:flex;align-items:center;justify-content:center;background:${x.bg};font-family:system-ui,sans-serif;${x.body||''}}</style>\n<style>\n${x.css}\n</style></head><body>\n${demo&&x.open?x.html.replace('<details ','<details open ').replace('<input ','<input checked '):x.html}\n</body></html>`;
+const frame=(x,live)=>`<div class="cframe${live?' live':''}"><iframe title="${x.t} preview" loading="lazy" srcdoc="${esc(cdoc(x,true))}"${live?'':' tabindex="-1"'}></iframe></div>`;
+let ccat='All',me=null,server=false;
+const byT=t=>DATA.find(x=>x.t===t);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const bfk=x=>x.bf||(['grot','man'].includes(x.f)?x.f:'sans');
+const fname=k=>FONT[k].match(/'([^']+)'/)[1];
+const vars=x=>{const[bg,s,t,m,a,at]=x.pal;return `--bg:${bg};--s:${s};--t:${t};--m:${m};--a:${a};--at:${at};--hf:${FONT[x.f]};--bf:${FONT[bfk(x)]};--hw:${x.w||400}${x.r?';--r:'+x.r:''}`};
+const L={
+editorial:x=>`<div class="m m-ed"><div class="top">${x.n}<span>☰</span></div><h3>${x.h}</h3><p>${x.p}</p><span class="cta">${x.x}</span></div>`,
+split:x=>`<div class="m m-split"><div><small>${x.n}</small><h3>${x.h}</h3><p>${x.p}</p></div><div class="blk"><i>${x.x}</i></div></div>`,
+centered:x=>`<div class="m m-cen"><div class="ring">${x.sym||'✳'}</div><small>${x.n}</small><h3>${x.h}</h3><p>${x.p}</p><hr><p>${x.x}</p></div>`,
+image:x=>`<div class="m m-img"><div class="top">${x.n}<span>→</span></div><div class="blk"><i>${x.x}</i></div><h3>${x.h}</h3><p>${x.p}</p></div>`,
+stats:x=>`<div class="m m-stats"><div class="top">${x.n}<span>2026</span></div><h3>${x.h}</h3><p>${x.p}</p><div class="row">${x.stats.map(([v,l])=>`<div><b>${v}</b><small>${l}</small></div>`).join('')}</div></div>`,
+poster:x=>`<div class="m m-poster"><small>${x.n}</small><h3>${x.h}</h3><div class="foot"><span>${x.p}</span><span>${x.x}</span></div></div>`,
+post:x=>`<div class="m m-post"><div class="who"><span class="dot"></span>${x.n}</div><h3>${x.h}</h3><p>${x.p}</p><small>${x.x}</small></div>`,
+email:x=>`<div class="m m-mail"><div class="hd">${x.n}</div><div class="bd"><h3>${x.h}</h3><p>${x.p}</p><span class="cta">${x.x}</span></div><div class="ft">Unsubscribe · View in browser</div></div>`,
+resume:x=>`<div class="m m-cv"><h3>${x.h}</h3><small>${x.n}</small><div class="cols"><div><b>Experience</b><p>${x.p}</p><i></i><i></i><i></i><i></i></div><div><b>Skills</b><i></i><i></i><i></i><b>Contact</b><p>${x.x}</p></div></div></div>`,
+app:x=>`<div class="m m-app"><div class="phone"><div class="top">${x.n}<span>●</span></div><h3>${x.h}</h3><div class="c">${x.p}</div><div class="c alt">${x.x}</div><div class="tab"><i></i><i></i><i></i></div></div></div>`,
+deck:x=>`<div class="m m-deck"><div class="top">${x.n}<span>01 / 12</span></div><h3>${x.h}</h3><p>${x.p}</p><div class="bar"></div><small>${x.x}</small></div>`,
+brand:x=>`<div class="m m-brand"><div class="logo"><span>${x.sym}</span>${x.n}</div><div class="sw"><i style="background:var(--bg)"></i><i style="background:var(--t)"></i><i style="background:var(--a)"></i><i style="background:var(--m)"></i></div><h3>Aa — ${x.h}</h3><p>${x.p}</p></div>`};
+const stage=x=>`<div class="stage" style="${vars(x)}">${L[x.l](x)}</div>`;
+const FONTS_URL=document.querySelector('#fonts').href;
+const exportHTML=x=>`<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${x.t}</title><link href="${FONTS_URL}" rel="stylesheet"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:${x.pal[0]}}${MOCK_CSS}.stage{width:min(1200px,100vw);border:0;border-radius:0}</style></head><body>${stage(x)}</body></html>`;
+
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let saved=new Set(store.get('gf-saved',[])),cat='All',q='',sort='Popular',list=DATA,cur=null;
+const $=s=>document.querySelector(s),dlg=$('#dlg');
+
+const card=x=>`<article class="card"><div class="preview" data-open="${x.t}">${stage(x)}<div class="actions"><button class="action" data-open="${x.t}">Preview</button><button class="action primary" data-copy="${x.t}">Copy preset ↗</button></div></div><div class="cardfoot"><div><div class="cardtitle">${x.t}</div><div class="cardmeta">${x.c} · ${x.s}</div></div>${x.tag?`<span class="badge">${x.tag}</span>`:''}<button class="fav" data-fav="${x.t}" aria-pressed="${saved.has(x.t)}" aria-label="Save ${x.t}">${saved.has(x.t)?'♥':'♡'}</button></div></article>`;
+const gridHTML=items=>{list=items;return `<main class="grid" id="grid">${items.length?items.map(card).join(''):'<div class="empty">No presets found. Try another search or category.</div>'}</main>`};
+function filtered(){const s=q.trim().toLowerCase();return DATA.filter(x=>(cat==='All'||x.c===cat)&&`${x.t} ${x.c} ${x.s} ${x.n} ${x.h} ${x.p}`.toLowerCase().includes(s)).sort(sort==='A–Z'?(a,b)=>a.t.localeCompare(b.t):sort==='Newest'?(a,b)=>b.d.localeCompare(a.d):(a,b)=>b.pop-a.pop)}
+const setCount=()=>{const c=$('#count');if(c)c.textContent=String(list.length).padStart(2,'0')+' '+(c.dataset.unit||'STYLES')};
+function paintGrid(){$('#grid').outerHTML=gridHTML(filtered());setCount()}
+const ccard=x=>`<article class="card"><div class="preview" data-comp="${x.t}">${frame(x)}<div class="actions"><button class="action" data-comp="${x.t}">View code</button><button class="action primary" data-ccopy="css" data-t="${x.t}">Copy CSS ↗</button></div></div><div class="cardfoot"><div><div class="cardtitle">${x.t}</div><div class="cardmeta">${x.c} · ${esc(x.k)}</div></div>${x.tag?`<span class="badge">${x.tag}</span>`:''}</div></article>`;
+const cgridHTML=items=>{list=items;return `<main class="grid" id="grid">${items.map(ccard).join('')}</main>`};
+function paintCGrid(){$('#grid').outerHTML=cgridHTML(COMPS.filter(x=>ccat==='All'||x.c===ccat));setCount()}
+const hero=(eb,h,p,note='')=>`<section class="hero"><div><div class="eyebrow">${eb}</div><h1>${h}</h1><p>${p}</p></div>${note}</section>`;
+const SEARCH_ICON='<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 4.5 4.5"/></svg>';
+const views={
+explore:()=>hero('The little library for lovely things','Start with something good.','Thoughtful design presets, ready to make your own.',`<div class="hero-note">${DATA.length} presets · ${CATS.length} categories <span style="color:var(--dot)">✳</span></div>`)+`<section class="controls"><label class="search">${SEARCH_ICON}<input id="search" type="search" placeholder="Find your next starting point…" value="${esc(q)}" aria-label="Search presets"></label><div class="filters">${['All',...CATS].map(c=>`<button class="filter${c===cat?' active':''}" data-cat="${c}">${c==='All'?'All presets':c}<span class="n">${c==='All'?DATA.length:DATA.filter(x=>x.c===c).length}</span></button>`).join('')}</div><label class="sort">Sort by <select id="sort">${['Popular','Newest','A–Z'].map(o=>`<option${o===sort?' selected':''}>${o}</option>`).join('')}</select></label><span class="count" id="count"></span></section>`+gridHTML(filtered()),
+components:()=>hero('Components','Copy, paste, ship.','Navbars, menus, buttons, cards and complete CSS kits: liquid glass, neumorphism, brutalism and more. Plain HTML and CSS, no framework.',`<div class="hero-note">${COMPS.length} components · ${COMPS.filter(x=>x.file).length} CSS kits <span style="color:var(--dot)">✳</span></div>`)+`<section class="controls"><div class="filters">${['All',...CCATS].map(c=>`<button class="filter${c===ccat?' active':''}" data-ccat="${c}">${c==='All'?'All components':c}<span class="n">${c==='All'?COMPS.length:COMPS.filter(x=>x.c===c).length}</span></button>`).join('')}</div><span class="count" id="count" data-unit="COMPONENTS" style="margin-left:auto"></span></section>`+cgridHTML(COMPS.filter(x=>ccat==='All'||x.c===ccat)),
+logo:()=>hero('Logo maker','Build your mark.','Shapes, text and a pen tool, all real vectors. Export SVG or PNG, or save it to your account with Pro.')+`<section class="lm"><div class="lm-tools">${LG_TOOLS.map(([t,i,l])=>`<button data-tool="${t}" title="${l}" aria-label="${l}" class="${t===lgTool?'on':''}">${i}</button>`).join('')}<button data-lg="undo" title="Undo (Ctrl+Z)" aria-label="Undo">↶</button></div><div class="lm-stage"><svg id="lmSvg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo canvas"></svg></div><aside class="lm-panel" id="lmPanel"></aside></section>`,
+community:()=>hero('Community','Made by Pro members.','Logos, images and CSS shared by the people who use Good Form. Free to download.')+'<div class="ruled"><main class="grid" id="community"><div class="empty">Loading…</div></main></div>',
+admin:()=>hero('Admin','Manage accounts.','Grant or revoke Pro for any account. Changes apply immediately.')+(me&&me.admin?`<section class="controls"><label class="search">${SEARCH_ICON}<input id="adminSearch" type="search" placeholder="Search name or email…" aria-label="Search users"></label><span class="count" id="adminCount" style="margin-left:auto"></span></section>`:'')+'<div id="adminBody" class="ruled"></div>',
+account:()=>hero('Account',me?`Hi, ${esc(me.name)}.`:'Sign in to continue.',me?`${esc(me.email)} · ${me.pro?'Pro member':'Free plan'}`:'Create a free account. Pro members can also upload and share files.')+'<div class="ruled" id="acctBody"></div>',
+collections:()=>hero('Collections','Hand-picked sets.','Presets that work well together, grouped for the job in front of you.')+`<section class="colls">${COLL.map(c=>`<a class="coll" href="#/c/${c.id}"><div class="strip">${c.items.slice(0,3).map(t=>stage(byT(t))).join('')}</div><h3>${c.title}</h3><p>${c.items.length} presets · ${c.desc}</p></a>`).join('')}</section>`,
+c:id=>{const c=COLL.find(c=>c.id===id);if(!c)return views.collections();return hero(`<a href="#/collections">← Collections</a>`,c.title+'.',`${c.desc} ${c.items.length} presets.`)+`<div class="ruled">${gridHTML(c.items.map(byT))}</div>`},
+saved:()=>{const items=DATA.filter(x=>saved.has(x.t));return hero('Saved',items.length?'Your shortlist.':'Nothing saved yet.',items.length?`${items.length} preset${items.length>1?'s':''} kept for later. Saved in this browser.`:'Tap ♡ on any preset to keep it here.')+(items.length?`<div class="ruled">${gridHTML(items)}</div>`:'<div class="page-empty"><a class="btn primary" href="#/explore">Browse presets</a></div>')},
+about:()=>hero('About','A small library, made with care.','Good Form is a growing set of design presets — websites, posts, decks, résumés and more — each built to be copied, tweaked and shipped.')+`<section class="page"><div class="prose"><p>Every preset is plain HTML and CSS. No framework, no build step, no account. Hit <b>Copy preset</b> and you get a single self-contained page with its fonts and palette, ready to paste into whatever you’re making.</p><p>Each one is designed around a real job: a café that needs a homepage on Friday, a founder with a pitch on Monday, a designer updating their résumé at midnight. If it doesn’t help someone start, it doesn’t go in.</p><h2>How to use them</h2><p>Browse by category or collection, open a preset to see it large, copy a colour straight from its palette, then copy or download the HTML. Saved presets stay in your browser for next time.</p></div><div class="facts"><div><b>${DATA.length}</b><span>Presets</span></div><div><b>${COMPS.length}</b><span>Components</span></div><div><b>${CATS.length}</b><span>Categories</span></div><div><b>${COLL.length}</b><span>Collections</span></div></div></section>`,
+pro:()=>hero('Good Form Pro','More good things, every month.','Everything in the free library, plus new drops and the tools to make them yours.')+`<section class="plans"><div class="plan"><div class="eyebrow">Free</div><h3>Library</h3><div class="price">€0<small> forever</small></div><ul><li>All ${DATA.length} presets</li><li>Copy & download HTML</li><li>Save favourites</li><li>Logo maker with SVG & PNG export</li></ul><a class="btn" href="#/explore">Start browsing</a></div><div class="plan hot"><div class="eyebrow">Pro</div><h3>Studio</h3><div class="price">€6<small> / month</small></div><ul><li>Upload & share files with the community</li><li>Save logos to your account</li><li>New presets every month</li><li>Commercial license</li></ul>${me&&me.pro?'<a class="btn primary" href="#/account">You’re Pro ✓ Go to uploads</a>':'<button class="btn primary" data-toast="Thanks! We’ll let you know when Pro opens.">Join the waitlist</button>'}</div></section>`};
+
+function route(){const[,page='explore',id]=location.hash.split('/');const key=views[page]?page:'explore';$('#view').innerHTML=key==='c'?views.c(id):views[key]();const nav=key==='c'?'collections':key;document.querySelectorAll('.nav a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.page===nav));setCount();$('.acct')?.removeAttribute('open');({account:loadAccount,community:loadCommunity,logo:initLogo,admin:()=>loadAdmin('')})[key]?.();document.title=(key==='explore'?'':nav[0].toUpperCase()+nav.slice(1)+' — ')+'Good Form';window.scrollTo(0,0)}
+function open(x){cur=x;dlg.className='';if(!list.includes(x))list=DATA;const rel=DATA.filter(r=>r.c===x.c&&r!==x).slice(0,4),on=saved.has(x.t);
+dlg.innerHTML=`<div class="dlg"><div class="dlg-stage">${stage(x)}</div><aside><div class="dlg-top"><div class="eyebrow">${x.c} · ${x.s}</div><div class="dlg-nav"><button class="icon-btn" data-step="-1" aria-label="Previous preset">←</button><button class="icon-btn" data-step="1" aria-label="Next preset">→</button><button class="icon-btn" data-close aria-label="Close">✕</button></div></div><h2>${x.t}</h2><p>${x.h} ${x.p}</p><dl><dt>Layout</dt><dd>${x.l[0].toUpperCase()+x.l.slice(1)}</dd><dt>Headings</dt><dd>${fname(x.f)}</dd><dt>Body</dt><dd>${fname(bfk(x))}</dd><dt>Added</dt><dd>${new Date(x.d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</dd></dl><div><div class="eyebrow">Palette · click to copy</div><div class="swatches">${x.pal.map(h=>`<button class="swatch" data-hex="${h}" style="background:${h}" title="${h}" aria-label="Copy ${h}"></button>`).join('')}</div></div><div class="dlg-actions"><button class="btn primary" data-copy="${x.t}">Copy HTML</button><button class="btn" data-dl="${x.t}">Download .html</button><button class="btn" data-fav="${x.t}" aria-pressed="${on}">${on?'♥ Saved':'♡ Save'}</button></div>${rel.length?`<div><div class="eyebrow">More ${x.c.toLowerCase()}</div><div class="related">${rel.map(r=>`<button class="filter" data-open="${r.t}">${r.t}</button>`).join('')}</div></div>`:''}</aside></div>`;
+if(!dlg.open)dlg.showModal()}
+const DLG_NAV='<div class="dlg-nav"><button class="icon-btn" data-step="-1" aria-label="Previous">←</button><button class="icon-btn" data-step="1" aria-label="Next">→</button><button class="icon-btn" data-close aria-label="Close">✕</button></div>';
+function openComp(x){cur=x;dlg.className='';if(!list.includes(x))list=COMPS;
+dlg.innerHTML=`<div class="dlg comp"><div class="dlg-stage">${frame(x,true)}</div><aside><div class="dlg-top"><div class="eyebrow">${x.c} · ${esc(x.k)}</div>${DLG_NAV}</div><h2>${x.t}</h2><p>${esc(x.desc)}</p><div class="dlg-actions"><button class="btn primary" data-ccopy="css" data-t="${x.t}">Copy CSS</button><button class="btn" data-ccopy="html" data-t="${x.t}">Copy HTML</button><button class="btn" data-cdl="css" data-t="${x.t}">Download ${x.file||'.css'}</button><button class="btn" data-cdl="html" data-t="${x.t}">Download demo .html</button></div><div class="code-grid"><div class="code"><div class="eyebrow">HTML</div><pre><code>${esc(x.html)}</code></pre></div><div class="code"><div class="eyebrow">CSS</div><pre><code>${esc(cssOf(x))}</code></pre></div></div></aside></div>`;
+if(!dlg.open)dlg.showModal()}
+const step=n=>(cur.html?openComp:open)(list[(list.indexOf(cur)+n+list.length)%list.length]);
+let tt;function toast(m){const el=$('#toast');(dlg.open?dlg:document.body).append(el);el.textContent=m;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),1800)}
+async function copyText(s,ok,btn){try{await navigator.clipboard.writeText(s);toast(ok);if(btn){const o=btn.textContent;btn.textContent='Copied ✓';setTimeout(()=>btn.textContent=o,1400)}}catch(e){toast('Clipboard is blocked here — use Download instead')}}
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function saveFile(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(`Downloading ${name}`)}
+function savedCount(){$('#savedCount').textContent=saved.size||''}
+function toggleFav(t){saved.has(t)?saved.delete(t):saved.add(t);store.set('gf-saved',[...saved]);const on=saved.has(t);document.querySelectorAll('[data-fav]').forEach(b=>{if(b.dataset.fav!==t)return;b.setAttribute('aria-pressed',on);b.textContent=b.classList.contains('fav')?(on?'♥':'♡'):(on?'♥ Saved':'♡ Save')});savedCount();toast(on?`Saved ${t}`:`Removed ${t}`);if(location.hash==='#/saved'&&!dlg.open)route()}
+
+// ---------- accounts (talks to server.js; the page still works without it) ----------
+async function api(url,data,method){const r=await fetch(url,{method:method||(data?'POST':'GET'),headers:data?{'Content-Type':'application/json'}:{},body:data?JSON.stringify(data):undefined,credentials:'same-origin'});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||`Request failed (${r.status})`);return j}
+const NEED_SERVER='Accounts need the server: run node server.js, then open http://localhost:3000';
+function paintAcct(){$('#acct').innerHTML=me?`<details class="acct"><summary aria-label="Account menu"><span class="avatar">${esc((me.name[0]||'?').toUpperCase())}</span>${me.pro?'<span class="pro-pill">PRO</span>':''}</summary><div class="acct-menu"><div class="who">${esc(me.name)}<br>${esc(me.email)}</div><a href="#/account">My account & uploads</a><a href="#/logo">Logo maker</a>${me.admin?'<a href="#/admin">Admin panel</a>':''}<button data-logout>Sign out</button></div></details>`:'<button class="btn sm" data-auth="login">Sign in</button>'}
+function openAuth(mode){if(!server)return toast(NEED_SERVER);const login=mode==='login';dlg.className='narrow';
+dlg.innerHTML=`<form class="auth" id="authForm" data-mode="${login?'login':'signup'}"><div class="dlg-top"><div class="tabs"><button type="button" class="filter${login?' active':''}" data-auth="login">Sign in</button><button type="button" class="filter${login?'':' active'}" data-auth="signup">Create account</button></div><button type="button" class="icon-btn" data-close aria-label="Close">✕</button></div><h2>${login?'Welcome back.':'Join Good Form.'}</h2>${login?'':'<input name="name" placeholder="Name" autocomplete="name" required maxlength="40" aria-label="Name">'}<input name="email" type="email" placeholder="Email" autocomplete="email" required aria-label="Email"><input name="password" type="password" placeholder="Password (8+ characters)" autocomplete="${login?'current-password':'new-password'}" required minlength="8" aria-label="Password"><p class="err" id="authErr" role="alert"></p><button class="btn primary">${login?'Sign in':'Create account'}</button></form>`;
+if(!dlg.open)dlg.showModal();dlg.querySelector('input').focus()}
+const ucard=(u,own)=>`<article class="card"><div class="ufile">${u.kind==='css'?'<span class="ucss">.css</span>':`<img src="/uploads/${u.file}" alt="${esc(u.title)}" loading="lazy">`}</div><div class="cardfoot"><div><div class="cardtitle">${esc(u.title)}</div><div class="cardmeta">by ${esc(u.author)} · .${u.ext} · ${Math.max(1,Math.round(u.size/1024))} KB</div></div><a class="badge" href="/uploads/${u.file}" download="${esc(u.title)}.${u.ext}">Download</a>${own?`<button class="fav" data-del="${u.id}" aria-label="Delete ${esc(u.title)}">✕</button>`:''}</div></article>`;
+async function loadAccount(){const el=$('#acctBody');if(!el)return;
+if(!server){el.innerHTML='<div class="empty">Accounts need the server. Run <code>node server.js</code> in the project folder, then open <b>http://localhost:3000</b>.</div>';return}
+if(!me){el.innerHTML='<div class="dlg-actions"><button class="btn primary" data-auth="login">Sign in</button><button class="btn" data-auth="signup">Create account</button></div>';return}
+el.innerHTML=(me.pro?'<form class="upform" id="upForm"><input type="file" name="file" accept=".png,.jpg,.jpeg,.webp,.svg,.css" required aria-label="File"><input type="text" name="label" placeholder="Title (optional)" maxlength="80" aria-label="Title"><button class="btn primary">Upload</button><span class="lm-hint">PNG, JPG, WebP, SVG or CSS · max 5 MB · shown in Community</span></form>':'<div class="upform"><span>Uploads are a <b>Pro</b> feature: share logos, images and CSS files with the community.</span><a class="btn primary" href="#/pro">See Pro</a></div>')+'<div class="eyebrow" style="margin-bottom:14px">Your uploads</div><main class="grid" id="mine"><div class="empty">Loading…</div></main>';
+try{const j=await api('/api/uploads?mine=1');$('#mine').innerHTML=j.uploads.length?j.uploads.map(u=>ucard(u,true)).join(''):'<div class="empty">Nothing uploaded yet.</div>'}catch(err){$('#mine').innerHTML=`<div class="empty">${esc(err.message)}</div>`}}
+// ---------- admin panel (the server checks admin rights on every request; this only decides what to show) ----------
+let adminUsers=[],adminT;
+const adminRow=u=>`<tr data-uid="${u.id}"><td>${esc(u.name)}${u.id===me.id?'<span class="you">YOU</span>':''}</td><td class="muted">${esc(u.email)}</td><td class="muted">${new Date(u.created).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</td><td>${u.pro?'<span class="pro-pill">PRO</span>':'<span class="muted">Free</span>'}</td><td><button class="btn sm${u.pro?'':' primary'}" data-setpro="${u.id}" data-to="${!u.pro}">${u.pro?'Revoke Pro':'Grant Pro'}</button></td></tr>`;
+async function loadAdmin(q){const el=$('#adminBody');if(!el)return;
+if(!server){el.innerHTML=`<div class="empty">${NEED_SERVER}</div>`;return}
+if(!me){el.innerHTML='<div class="empty">Sign in with the admin account to manage users.<br><br><button class="btn primary" data-auth="login">Sign in</button></div>';return}
+if(!me.admin){el.innerHTML='<div class="empty">You’re not authorized to view this page.</div>';return}
+try{adminUsers=(await api('/api/admin/users?q='+encodeURIComponent(q))).users;
+ $('#adminCount').textContent=String(adminUsers.length).padStart(2,'0')+' ACCOUNTS';
+ el.innerHTML=adminUsers.length?`<div class="utable-wrap"><table class="utable"><thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Plan</th><th></th></tr></thead><tbody>${adminUsers.map(adminRow).join('')}</tbody></table></div>`:`<div class="empty">${q?'No accounts match that search.':'No accounts yet.'}</div>`}
+catch(err){el.innerHTML=`<div class="empty">${esc(err.message)}</div>`}}
+async function setPro(id,pro,btn){btn.disabled=true;
+try{const {user}=await api(`/api/admin/users/${id}/pro`,{pro});const i=adminUsers.findIndex(u=>u.id===id);adminUsers[i]=user;
+ btn.closest('tr').outerHTML=adminRow(user);if(id===me.id){me.pro=user.pro;paintAcct()}
+ toast(`${user.name} is now ${user.pro?'Pro':'on the Free plan'}`)}
+catch(err){toast(err.message);btn.disabled=false}}
+document.addEventListener('input',e=>{if(e.target.id==='adminSearch'){clearTimeout(adminT);adminT=setTimeout(()=>loadAdmin(e.target.value.trim()),200)}});
+async function loadCommunity(){const el=$('#community');if(!server){el.innerHTML='<div class="empty">Community uploads need the server. Run <code>node server.js</code>, then open <b>http://localhost:3000</b>.</div>';return}
+try{const j=await api('/api/uploads');el.innerHTML=j.uploads.length?j.uploads.map(u=>ucard(u)).join(''):'<div class="empty">No uploads yet. Pro members can share files from their account page.</div>'}catch(err){el.innerHTML=`<div class="empty">${esc(err.message)}</div>`}}
+const fileB64=file=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=()=>rej(r.error);r.readAsDataURL(file)});
+document.addEventListener('submit',async e=>{const f=e.target;
+if(f.id==='authForm'){e.preventDefault();const btn=f.querySelector('.btn.primary');btn.disabled=true;try{const j=await api('/api/'+f.dataset.mode,Object.fromEntries(new FormData(f)));me=j.user;paintAcct();dlg.close();toast(`Signed in as ${me.name}`);route()}catch(err){$('#authErr').textContent=err.message}finally{btn.disabled=false}}
+else if(f.id==='upForm'){e.preventDefault();const file=f.elements.file.files[0],btn=f.querySelector('button');if(!file)return;if(file.size>5*1024*1024)return toast('Max 5 MB per file');btn.disabled=true;
+try{await api('/api/uploads',{title:f.elements.label.value.trim()||file.name.replace(/\.[^.]+$/,''),filename:file.name,data:await fileB64(file)});toast('Uploaded');loadAccount()}catch(err){toast(err.message)}finally{btn.disabled=false}}});
+
+// ---------- logo maker: shapes live in a 512×512 box; everything is plain SVG ----------
+const LG_TOOLS=[['select','↖','Select & move'],['pen','✎','Pen (click points)'],['rect','▢','Rectangle'],['ellipse','◯','Ellipse'],['triangle','△','Triangle'],['poly','⬡','Polygon'],['star','☆','Star'],['text','T','Text']];
+const LG_NAMES={rect:'Rectangle',ellipse:'Ellipse',poly:'Polygon',star:'Star',pen:'Path',text:'Text'};
+const LG_FONTS=['Fraunces','Instrument Serif','Manrope','Space Grotesk','DM Sans','DM Mono','Georgia','system-ui'];
+const LG_DEFAULT={bg:'#ffffff',shapes:[{type:'rect',x:56,y:56,w:400,h:400,r:104,fill:'#22231f',stroke:'none',sw:0,op:1,rot:0},{type:'ellipse',x:138,y:140,w:180,h:180,fill:'none',stroke:'#f7f7f4',sw:44,op:1,rot:0},{type:'ellipse',x:330,y:96,w:90,h:90,fill:'#d6fa78',stroke:'none',sw:0,op:1,rot:0}]};
+const LG_NEW={rect:{type:'rect',r:24},ellipse:{type:'ellipse'},triangle:{type:'poly',n:3},poly:{type:'poly',n:6},star:{type:'star',n:5,inner:.45},text:{type:'text',text:'Brand',font:'Fraunces',weight:600,x:156,y:216,w:200,h:80,fill:'#22231f'}};
+let LG=store.get('gf-logo',null)||structuredClone(LG_DEFAULT),lgSel=-1,lgTool='select',lgPen=null,lgDrag=null,lgHist=[],lgSnap=JSON.stringify(LG),lgT;
+function lgCommit(){const now=JSON.stringify(LG);if(now===lgSnap)return;lgHist.push(lgSnap);if(lgHist.length>60)lgHist.shift();lgSnap=now;store.set('gf-logo',LG)}
+function lgUndo(){if(!lgHist.length)return toast('Nothing to undo');LG=JSON.parse(lgHist.pop());lgSnap=JSON.stringify(LG);store.set('gf-logo',LG);lgSel=-1;lgRender();lgPanel()}
+function lgD(s){const cx=s.x+s.w/2,cy=s.y+s.h/2;let p;
+if(s.type==='pen')p=s.pts.map(([u,v])=>[s.x+u*s.w,s.y+v*s.h]);
+else{const n=s.type==='star'?s.n*2:s.n;p=[];for(let i=0;i<n;i++){const a=-Math.PI/2+i*Math.PI*2/n,k=s.type==='star'&&i%2?s.inner:1;p.push([cx+Math.cos(a)*s.w/2*k,cy+Math.sin(a)*s.h/2*k])}}
+return 'M'+p.map(q=>q.map(v=>Math.round(v*10)/10).join(' ')).join(' L')+(s.closed===false?'':' Z')}
+function lgShape(s,i){const cx=s.x+s.w/2,cy=s.y+s.h/2,a=`fill="${s.fill}" stroke="${s.stroke}" stroke-width="${s.sw}" opacity="${s.op??1}"${s.rot?` transform="rotate(${s.rot} ${cx} ${cy})"`:''}${i==null?'':` data-i="${i}"`}`;
+if(s.type==='rect')return `<rect x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" rx="${Math.min(s.r||0,s.w/2,s.h/2)}" ${a}/>`;
+if(s.type==='ellipse')return `<ellipse cx="${cx}" cy="${cy}" rx="${s.w/2}" ry="${s.h/2}" ${a}/>`;
+if(s.type==='text')return `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-family="${esc(s.font)}" font-weight="${s.weight}" font-size="${s.h}" ${a}>${esc(s.text)}</text>`;
+return `<path d="${lgD(s)}" stroke-linejoin="round" stroke-linecap="round" ${a}/>`}
+const lgBody=ids=>(LG.bg==='none'?'':`<rect width="512" height="512" fill="${LG.bg}"/>`)+LG.shapes.map((s,i)=>lgShape(s,ids?i:null)).join('');
+const lgExport=()=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">${lgBody(false)}</svg>`;
+function lgRender(){const svg=$('#lmSvg');if(!svg)return;
+let pen='';if(lgPen&&lgPen.length)pen=`<polyline points="${lgPen.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#4f6bff" stroke-width="2" vector-effect="non-scaling-stroke"/>`+lgPen.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i?4:7}" fill="${i?'#4f6bff':'#fff'}" stroke="#4f6bff" stroke-width="2"/>`).join('');
+svg.innerHTML=lgBody(true)+pen;
+const el=lgSel>=0&&svg.querySelector(`[data-i="${lgSel}"]`);if(!el)return;
+const b=el.getBBox(),s=LG.shapes[lgSel],cx=s.x+s.w/2,cy=s.y+s.h/2,pad=6+s.sw/2,rad=(s.rot||0)*Math.PI/180;
+const hx=b.x+b.width+pad-cx,hy=b.y+b.height+pad-cy,rx=cx+hx*Math.cos(rad)-hy*Math.sin(rad),ry=cy+hx*Math.sin(rad)+hy*Math.cos(rad);
+svg.insertAdjacentHTML('beforeend',`<rect x="${b.x-pad}" y="${b.y-pad}" width="${b.width+2*pad}" height="${b.height+2*pad}" fill="none" stroke="#4f6bff" stroke-width="1.5" stroke-dasharray="6 4" vector-effect="non-scaling-stroke" pointer-events="none"${s.rot?` transform="rotate(${s.rot} ${cx} ${cy})"`:''}/><circle data-h cx="${rx}" cy="${ry}" r="9" fill="#4f6bff" stroke="#fff" stroke-width="3" style="cursor:nwse-resize"/>`)}
+function lgSync(){const s=LG.shapes[lgSel];if(!s)return;document.querySelectorAll('#lmPanel [data-p]').forEach(i=>{if(i!==document.activeElement&&i.type!=='color'&&s[i.dataset.p]!=null)i.value=s[i.dataset.p]})}
+function lgPanel(){const el=$('#lmPanel');if(!el)return;const s=LG.shapes[lgSel];
+const row=(l,h)=>`<div class="row"><span>${l}</span>${h}</div>`,rng=(p,a,b,st=1)=>`<input type="range" data-p="${p}" min="${a}" max="${b}" step="${st}" value="${s[p]??0}" aria-label="${p}">`;
+const col=p=>`<span class="colrow"><input type="color" data-p="${p}" value="${s[p]==='none'?'#000000':s[p]}" aria-label="${p} colour"><label class="chk"><input type="checkbox" data-none="${p}"${s[p]==='none'?' checked':''}>none</label></span>`;
+let h;
+if(!s)h=`<div class="eyebrow">Canvas</div>${row('Background',`<span class="colrow"><input type="color" data-bg value="${LG.bg==='none'?'#ffffff':LG.bg}" aria-label="Background colour"><label class="chk"><input type="checkbox" data-bgnone${LG.bg==='none'?' checked':''}>transparent</label></span>`)}<p class="lm-hint">Pick a tool on the left to add a shape. Drag to move, drag the blue dot to resize (Shift keeps proportions). <b>Pen:</b> click to place points, then click the first point, double-click or press Enter to finish. Arrow keys nudge, Delete removes, Ctrl+Z undoes.</p>`;
+else h=`<div class="eyebrow">${s.type==='poly'&&s.n===3?'Triangle':LG_NAMES[s.type]}</div>
+${s.type==='text'?row('Text',`<input type="text" data-p="text" value="${esc(s.text)}" maxlength="40">`)+row('Font',`<select data-p="font">${LG_FONTS.map(f=>`<option${f===s.font?' selected':''}>${f}</option>`).join('')}</select>`)+row('Weight',`<select data-p="weight">${[300,400,500,600,700,800].map(w=>`<option${w===s.weight?' selected':''}>${w}</option>`).join('')}</select>`):''}
+${row('Fill',col('fill'))}${row('Stroke',col('stroke'))}${row('Stroke width',rng('sw',0,80))}${row('Opacity',rng('op',0,1,.05))}${row('Rotate',rng('rot',-180,180))}
+${s.type==='rect'?row('Corners',rng('r',0,256)):''}${s.type==='poly'?row('Sides',rng('n',3,12)):''}${s.type==='star'?row('Points',rng('n',3,12))+row('Inner',rng('inner',.1,.9,.01)):''}${s.type==='pen'?row('Shape',`<label class="chk"><input type="checkbox" data-closed${s.closed!==false?' checked':''}>closed path</label>`):''}
+<div class="xywh">${['x','y','w','h'].map(p=>`<label>${p.toUpperCase()}<input type="number" data-p="${p}" value="${s[p]}"></label>`).join('')}</div>
+<div class="lm-btns"><button class="btn sm" data-lg="dup">Duplicate</button><button class="btn sm" data-lg="up">Forward</button><button class="btn sm" data-lg="down">Back</button><button class="btn sm" data-lg="del">Delete</button></div>`;
+el.innerHTML=h+`<div class="eyebrow">Layers</div><div class="layers">${LG.shapes.map((s,i)=>[s,i]).reverse().map(([s,i])=>`<button data-layer="${i}" class="${i===lgSel?'on':''}"><i style="background:${s.fill==='none'?'transparent':s.fill};border-color:${s.stroke==='none'?'var(--line)':s.stroke}"></i>${s.type==='text'?esc(s.text):LG_NAMES[s.type]}</button>`).join('')||'<p class="lm-hint">No shapes yet.</p>'}</div>
+<div class="eyebrow">Export</div><div class="lm-btns"><button class="btn sm primary" data-lg="svg">Download SVG</button><button class="btn sm" data-lg="png">PNG</button><button class="btn sm" data-lg="upload">Save to uploads</button><button class="btn sm" data-lg="reset">Clear</button></div>`}
+function lgSetTool(t){if(LG_NEW[t]){lgAdd(t);t='select'}lgTool=t;lgPen=null;document.querySelectorAll('[data-tool]').forEach(b=>b.classList.toggle('on',b.dataset.tool===t));const svg=$('#lmSvg');if(svg)svg.style.cursor=t==='pen'?'crosshair':'default';lgRender()}
+function lgAdd(k){LG.shapes.push({x:176,y:176,w:160,h:160,fill:'#4f6bff',stroke:'none',sw:0,op:1,rot:0,...structuredClone(LG_NEW[k])});lgSel=LG.shapes.length-1;lgCommit();lgPanel()}
+function lgFinishPen(){const p=(lgPen||[]).filter((q,i,a)=>!i||Math.hypot(q[0]-a[i-1][0],q[1]-a[i-1][1])>3);lgPen=null;
+if(p.length<2){lgRender();return}const xs=p.map(q=>q[0]),ys=p.map(q=>q[1]),x=Math.min(...xs),y=Math.min(...ys),w=Math.max(1,Math.max(...xs)-x),h=Math.max(1,Math.max(...ys)-y),closed=p.length>2;
+LG.shapes.push({type:'pen',pts:p.map(([a,b])=>[+((a-x)/w).toFixed(4),+((b-y)/h).toFixed(4)]),closed,x,y,w,h,fill:closed?'#4f6bff':'none',stroke:closed?'none':'#22231f',sw:closed?0:8,op:1,rot:0});
+lgSel=LG.shapes.length-1;lgCommit();lgSetTool('select');lgPanel()}
+function lgPt(e){const svg=$('#lmSvg'),q=new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse());return[Math.round(q.x),Math.round(q.y)]}
+function initLogo(){const svg=$('#lmSvg');
+svg.addEventListener('pointerdown',e=>{const[x,y]=lgPt(e);
+ if(lgTool==='pen'){lgPen=lgPen||[];const f=lgPen[0];if(lgPen.length>2&&Math.hypot(x-f[0],y-f[1])<12)return lgFinishPen();lgPen.push([x,y]);return lgRender()}
+ const h=e.target.closest('[data-h]'),hit=e.target.closest('[data-i]');
+ if(h&&lgSel>=0){const s=LG.shapes[lgSel];lgDrag={size:1,x,y,w:s.w,h:s.h}}
+ else if(hit){lgSel=+hit.dataset.i;const s=LG.shapes[lgSel];lgDrag={x,y,ox:s.x,oy:s.y};lgPanel()}
+ else if(lgSel>=0){lgSel=-1;lgPanel()}
+ svg.setPointerCapture(e.pointerId);lgRender()});
+svg.addEventListener('pointermove',e=>{if(!lgDrag)return;const[x,y]=lgPt(e),s=LG.shapes[lgSel],dx=x-lgDrag.x,dy=y-lgDrag.y;
+ if(!lgDrag.size){s.x=lgDrag.ox+dx;s.y=lgDrag.oy+dy}
+ else{let w=Math.max(8,lgDrag.w+dx),h=Math.max(8,lgDrag.h+dy);if(e.shiftKey||s.type==='text'){const k=Math.max(w/lgDrag.w,h/lgDrag.h);w=lgDrag.w*k;h=lgDrag.h*k}s.w=Math.round(w);s.h=Math.round(h)}
+ lgRender();lgSync()});
+svg.addEventListener('pointerup',()=>{if(lgDrag){lgDrag=null;lgCommit()}});
+svg.addEventListener('dblclick',()=>{if(lgPen)lgFinishPen()});
+lgSetTool(lgTool);lgPanel();document.fonts?.ready.then(lgRender)}
+function lgPng(){const img=new Image(),url=URL.createObjectURL(new Blob([lgExport()],{type:'image/svg+xml'}));
+// shortcut: web fonts aren't embedded when an SVG is drawn to canvas, so text falls back to system fonts; embed fonts as data URIs if PNG text must match.
+img.onload=()=>{const c=document.createElement('canvas');c.width=c.height=1024;c.getContext('2d').drawImage(img,0,0,1024,1024);URL.revokeObjectURL(url);c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='logo.png';a.click();toast('Downloading logo.png')})};
+img.onerror=()=>toast('Couldn’t render the PNG');img.src=url}
+async function lgAction(a){const s=LG.shapes[lgSel],S=LG.shapes;
+if(a==='undo')return lgUndo();if(a==='svg')return saveFile('logo.svg',lgExport(),'image/svg+xml');if(a==='png')return lgPng();
+if(a==='upload'){if(!server)return toast(NEED_SERVER);if(!me)return openAuth('login');if(!me.pro)return toast('Saving to uploads is a Pro feature');
+ try{await api('/api/uploads',{title:'Logo '+new Date().toLocaleDateString('en-GB'),filename:'logo.svg',data:btoa(unescape(encodeURIComponent(lgExport())))});toast('Saved to your uploads')}catch(err){toast(err.message)}return}
+if(a==='del'&&s){S.splice(lgSel,1);lgSel=-1}
+else if(a==='dup'&&s){const c=structuredClone(s);c.x+=20;c.y+=20;S.push(c);lgSel=S.length-1}
+else if(a==='up'&&s&&lgSel<S.length-1){[S[lgSel],S[lgSel+1]]=[S[lgSel+1],S[lgSel]];lgSel++}
+else if(a==='down'&&s&&lgSel>0){[S[lgSel],S[lgSel-1]]=[S[lgSel-1],S[lgSel]];lgSel--}
+else if(a==='reset'){LG={bg:'#ffffff',shapes:[]};lgSel=-1}
+lgCommit();lgRender();lgPanel()}
+document.addEventListener('input',e=>{const t=e.target;if(!t.closest?.('#lmPanel'))return;const s=LG.shapes[lgSel],ds=t.dataset;
+ if('bg' in ds)LG.bg=t.value;
+ else if('bgnone' in ds)LG.bg=t.checked?'none':$('[data-bg]').value;
+ else if(s&&ds.none){s[ds.none]=t.checked?'none':t.closest('.colrow').querySelector('[type=color]').value;if(ds.none==='stroke'&&!t.checked&&!s.sw)s.sw=8}
+ else if(s&&'closed' in ds)s.closed=t.checked;
+ else if(s&&ds.p)s[ds.p]=['text','font','fill','stroke'].includes(ds.p)?t.value:+t.value;
+ lgRender()});
+document.addEventListener('change',e=>{if(e.target.closest?.('#lmPanel')){lgCommit();lgPanel()}});
+document.addEventListener('keydown',e=>{if(location.hash!=='#/logo'||dlg.open||e.target.matches('input,select,textarea'))return;const s=LG.shapes[lgSel],k=e.key,mod=e.ctrlKey||e.metaKey;
+ if(mod&&k.toLowerCase()==='z'){e.preventDefault();lgUndo()}
+ else if(mod&&k.toLowerCase()==='d'&&s){e.preventDefault();lgAction('dup')}
+ else if(k==='Enter'&&lgPen)lgFinishPen();
+ else if(k==='Escape'){lgSel=-1;lgSetTool('select');lgPanel()}
+ else if(s&&(k==='Delete'||k==='Backspace')){e.preventDefault();lgAction('del')}
+ else if(s&&k.startsWith('Arrow')){e.preventDefault();const n=e.shiftKey?10:1;if(k==='ArrowLeft')s.x-=n;if(k==='ArrowRight')s.x+=n;if(k==='ArrowUp')s.y-=n;if(k==='ArrowDown')s.y+=n;lgRender();lgSync();clearTimeout(lgT);lgT=setTimeout(lgCommit,400)}});
+
+const root=document.documentElement,mq=matchMedia('(prefers-color-scheme: dark)');
+const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':mq.matches;
+function paintTheme(){const d=isDark(),b=$('#themeBtn');b.setAttribute('aria-label',d?'Switch to light mode':'Switch to dark mode');b.innerHTML=d?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>'}
+mq.addEventListener('change',paintTheme);
+
+document.addEventListener('click',e=>{const t=e.target.closest('[data-setpro],[data-auth],[data-logout],[data-del],[data-tool],[data-layer],[data-lg],[data-cat],[data-copy],[data-open],[data-fav],[data-dl],[data-hex],[data-toast],[data-step],[data-close],[data-ccat],[data-ccopy],[data-cdl],[data-comp],#themeBtn');if(!t)return;const d=t.dataset;
+if(t.id==='themeBtn'){root.dataset.theme=isDark()?'light':'dark';store.set('gf-theme',root.dataset.theme);paintTheme()}
+else if('cat' in d){cat=d.cat;document.querySelectorAll('[data-cat]').forEach(b=>b.classList.toggle('active',b===t));paintGrid()}
+else if('copy' in d)copyText(exportHTML(byT(d.copy)),`${d.copy} copied as HTML`,t);
+else if('dl' in d)saveFile(slug(d.dl)+'.html',exportHTML(byT(d.dl)),'text/html');
+else if('setpro' in d)setPro(d.setpro,d.to==='true',t);
+else if('auth' in d)openAuth(d.auth);
+else if('logout' in d)api('/api/logout',{}).then(()=>{me=null;paintAcct();toast('Signed out');route()}).catch(err=>toast(err.message));
+else if('del' in d){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Delete?';setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.textContent='✕'}},2500);return}api('/api/uploads/'+d.del,{},'DELETE').then(()=>{toast('Deleted');loadAccount()}).catch(err=>toast(err.message))}
+else if('tool' in d)lgSetTool(d.tool);
+else if('layer' in d){lgSel=+d.layer;lgRender();lgPanel()}
+else if('lg' in d)lgAction(d.lg);
+else if('ccat' in d){ccat=d.ccat;document.querySelectorAll('[data-ccat]').forEach(b=>b.classList.toggle('active',b===t));paintCGrid()}
+else if('ccopy' in d){const x=byC(d.t);copyText(d.ccopy==='css'?cssOf(x):x.html,`${x.t} ${d.ccopy.toUpperCase()} copied`,t)}
+else if('cdl' in d){const x=byC(d.t);d.cdl==='css'?saveFile(x.file||slug(x.t)+'.css',cssOf(x),'text/css'):saveFile(slug(x.t)+'.html',cdoc(x),'text/html')}
+else if('comp' in d)openComp(byC(d.comp));
+else if('fav' in d)toggleFav(d.fav);
+else if('hex' in d)copyText(d.hex,`${d.hex} copied`);
+else if('toast' in d)toast(d.toast);
+else if('step' in d)step(+d.step);
+else if('close' in d)dlg.close();
+else if('open' in d)open(byT(d.open))});
+document.addEventListener('input',e=>{if(e.target.id==='search'){q=e.target.value;paintGrid()}});
+document.addEventListener('change',e=>{if(e.target.id==='sort'){sort=e.target.value;paintGrid()}});
+document.addEventListener('keydown',e=>{if(dlg.open&&(e.key==='ArrowLeft'||e.key==='ArrowRight')&&!e.target.matches('input'))step(e.key==='ArrowLeft'?-1:1)});
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+addEventListener('hashchange',()=>{if(dlg.open)dlg.close();route()});
+paintTheme();savedCount();
+api('/api/me').then(j=>{server=true;me=j.user}).catch(()=>{server=false}).finally(()=>{paintAcct();route()});
+</script></body></html>

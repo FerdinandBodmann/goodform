@@ -76,7 +76,11 @@ dialog.narrow{width:min(420px,94vw)}.auth{padding:26px;display:flex;flex-directi
 .auth input{padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:14px}.err{color:#d6456a;font-size:12px;min-height:16px;margin:0}
 .btn.sm{padding:7px 11px;font-size:11px}.btn:disabled{opacity:.5;cursor:wait}
 .upform{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:18px;border:1px dashed var(--chipline);border-radius:10px;margin-bottom:28px;font-size:13px;color:var(--soft)}.upform input[type=text]{flex:1;min-width:160px;padding:9px 11px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
-.ufile{aspect-ratio:435/230;border-radius:7px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;overflow:hidden}.utable-wrap{overflow-x:auto;padding-bottom:70px}.utable{width:100%;border-collapse:collapse;font-size:13px}.utable th{text-align:left;font:10px 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--line)}
+.ufile{aspect-ratio:435/230;border-radius:7px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;overflow:hidden}.pal-edit{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;margin:8px 0}
+.cpick{display:flex;align-items:center;gap:8px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--card);min-width:0}
+.cpick input[type=color]{width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:6px;background:none;cursor:pointer;flex:none}
+.cpick span{display:block;font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hexbtn{border:0;background:none;padding:0;font:11px 'DM Mono',monospace;cursor:copy}
+.utable-wrap{overflow-x:auto;padding-bottom:70px}.utable{width:100%;border-collapse:collapse;font-size:13px}.utable th{text-align:left;font:10px 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--line)}
 .utable td{padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}.utable td:last-child{text-align:right}.utable .muted{color:var(--muted)}.utable .you{font:9px 'DM Mono',monospace;color:var(--muted);margin-left:6px}
 .ufile{position:relative}.ufile img{position:absolute;inset:11%;width:78%;height:78%;object-fit:contain}a.badge{text-decoration:none}.ucss{font:600 30px 'DM Mono',monospace;color:var(--muted)}
 .lm{display:grid;grid-template-columns:52px minmax(0,1fr) 300px;gap:18px;border-top:1px solid var(--line);padding:24px 0 70px;align-items:start}
@@ -789,6 +793,17 @@ body{background:var(--bg);color:var(--text);transition:background .25s,color .25
 .muted{color:var(--muted)}
 .btn{background:var(--accent);color:#fff;border:0;border-radius:calc(var(--radius) - 4px);padding:11px 18px;font:600 14px system-ui,sans-serif;cursor:pointer}`}];
 const byC=t=>COMPS.find(x=>x.t===t);
+// ---------- colour editing: edits live for this visit; cards, previews, copy and download all use them ----------
+const EDP={},EDC={},ROLES=['Background','Surface','Text','Muted','Accent','On accent'];
+const pv=x=>EDP[x.t]?{...x,pal:EDP[x.t]}:x;
+const COLOR_RE=/#(?:[0-9a-f]{6}|[0-9a-f]{3})\b|rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*[\d.]+\s*)?\)/gi;
+const hx=n=>(+n).toString(16).padStart(2,'0');
+const colorKey=(m,r,g,b)=>{if(m[0]!=='#')return '#'+hx(r)+hx(g)+hx(b);const h=m.slice(1).toLowerCase();return '#'+(h.length===3?[...h].map(c=>c+c).join(''):h)};
+function colorsOf(x){const s=new Set();for(const str of [x.bg,x.css,x.html])for(const m of str.matchAll(COLOR_RE))s.add(colorKey(m[0],m[1],m[2],m[3]));return [...s]}
+// rgba() colours keep their transparency, only the colour changes
+const recolor=(str,map)=>str.replace(COLOR_RE,(m,r,g,b,a)=>{const n=map[colorKey(m,r,g,b)];if(!n)return m;if(m[0]==='#')return n;const c=[1,3,5].map(i=>parseInt(n.slice(i,i+2),16)).join(',');return a?`rgba(${c}${a})`:`rgb(${c})`});
+const cv=x=>EDC[x.t]?{...x,bg:recolor(x.bg,EDC[x.t]),css:recolor(x.css,EDC[x.t]),html:recolor(x.html,EDC[x.t])}:x;
+const colorEditor=rows=>`<div><div class="eyebrow">Colours · edit before copying</div><div class="pal-edit">${rows.map(([attr,label,val])=>`<div class="cpick"><input type="color" ${attr} value="${val}" aria-label="${label}"><div><span>${label}</span><button class="hexbtn" data-hex="${val}">${val}</button></div></div>`).join('')}</div><button class="btn sm" data-creset>Reset colours</button></div>`;
 const cssOf=x=>(x.css.startsWith('/*')?'':`/* ${x.t} · good form */\n`)+x.css.trim()+'\n';
 // demo=true shows <details>/checkbox components in their open state so the preview isn't an empty bar
 const cdoc=(x,demo)=>`<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${x.t}</title>\n<style>body{margin:0;min-height:100vh;box-sizing:border-box;padding:32px;display:flex;align-items:center;justify-content:center;background:${x.bg};font-family:system-ui,sans-serif;${x.body||''}}</style>\n<style>\n${x.css}\n</style></head><body>\n${demo&&x.open?x.html.replace('<details ','<details open ').replace('<input ','<input checked '):x.html}\n</body></html>`;
@@ -820,12 +835,12 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e)
 let saved=new Set(store.get('gf-saved',[])),cat='All',q='',sort='Popular',list=DATA,cur=null;
 const $=s=>document.querySelector(s),dlg=$('#dlg');
 
-const card=x=>`<article class="card"><div class="preview" data-open="${x.t}">${stage(x)}<div class="actions"><button class="action" data-open="${x.t}">Preview</button><button class="action primary" data-copy="${x.t}">Copy preset ↗</button></div></div><div class="cardfoot"><div><div class="cardtitle">${x.t}</div><div class="cardmeta">${x.c} · ${x.s}</div></div>${x.tag?`<span class="badge">${x.tag}</span>`:''}<button class="fav" data-fav="${x.t}" aria-pressed="${saved.has(x.t)}" aria-label="Save ${x.t}">${saved.has(x.t)?'♥':'♡'}</button></div></article>`;
+const card=x=>`<article class="card"><div class="preview" data-open="${x.t}">${stage(pv(x))}<div class="actions"><button class="action" data-open="${x.t}">Preview</button><button class="action primary" data-copy="${x.t}">Copy preset ↗</button></div></div><div class="cardfoot"><div><div class="cardtitle">${x.t}</div><div class="cardmeta">${x.c} · ${x.s}</div></div>${x.tag?`<span class="badge">${x.tag}</span>`:''}<button class="fav" data-fav="${x.t}" aria-pressed="${saved.has(x.t)}" aria-label="Save ${x.t}">${saved.has(x.t)?'♥':'♡'}</button></div></article>`;
 const gridHTML=items=>{list=items;return `<main class="grid" id="grid">${items.length?items.map(card).join(''):'<div class="empty">No presets found. Try another search or category.</div>'}</main>`};
 function filtered(){const s=q.trim().toLowerCase();return DATA.filter(x=>(cat==='All'||x.c===cat)&&`${x.t} ${x.c} ${x.s} ${x.n} ${x.h} ${x.p}`.toLowerCase().includes(s)).sort(sort==='A–Z'?(a,b)=>a.t.localeCompare(b.t):sort==='Newest'?(a,b)=>b.d.localeCompare(a.d):(a,b)=>b.pop-a.pop)}
 const setCount=()=>{const c=$('#count');if(c)c.textContent=String(list.length).padStart(2,'0')+' '+(c.dataset.unit||'STYLES')};
 function paintGrid(){$('#grid').outerHTML=gridHTML(filtered());setCount()}
-const ccard=x=>`<article class="card"><div class="preview" data-comp="${x.t}">${frame(x)}<div class="actions"><button class="action" data-comp="${x.t}">View code</button><button class="action primary" data-ccopy="css" data-t="${x.t}">Copy CSS ↗</button></div></div><div class="cardfoot"><div><div class="cardtitle">${x.t}</div><div class="cardmeta">${x.c} · ${esc(x.k)}</div></div>${x.tag?`<span class="badge">${x.tag}</span>`:''}</div></article>`;
+const ccard=x=>`<article class="card"><div class="preview" data-comp="${x.t}">${frame(cv(x))}<div class="actions"><button class="action" data-comp="${x.t}">View code</button><button class="action primary" data-ccopy="css" data-t="${x.t}">Copy CSS ↗</button></div></div><div class="cardfoot"><div><div class="cardtitle">${x.t}</div><div class="cardmeta">${x.c} · ${esc(x.k)}</div></div>${x.tag?`<span class="badge">${x.tag}</span>`:''}</div></article>`;
 const cgridHTML=items=>{list=items;return `<main class="grid" id="grid">${items.map(ccard).join('')}</main>`};
 function paintCGrid(){$('#grid').outerHTML=cgridHTML(COMPS.filter(x=>ccat==='All'||x.c===ccat));setCount()}
 const hero=(eb,h,p,note='')=>`<section class="hero"><div><div class="eyebrow">${eb}</div><h1>${h}</h1><p>${p}</p></div>${note}</section>`;
@@ -845,12 +860,23 @@ pro:()=>hero('Good Form Pro','More good things, every month.','Everything in the
 
 function route(){const[,page='explore',id]=location.hash.split('/');const key=views[page]?page:'explore';$('#view').innerHTML=key==='c'?views.c(id):views[key]();const nav=key==='c'?'collections':key;document.querySelectorAll('.nav a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.page===nav));setCount();$('.acct')?.removeAttribute('open');({account:loadAccount,community:loadCommunity,logo:initLogo,admin:()=>loadAdmin('')})[key]?.();document.title=(key==='explore'?'':nav[0].toUpperCase()+nav.slice(1)+' — ')+'Good Form';window.scrollTo(0,0)}
 function open(x){cur=x;dlg.className='';if(!list.includes(x))list=DATA;const rel=DATA.filter(r=>r.c===x.c&&r!==x).slice(0,4),on=saved.has(x.t);
-dlg.innerHTML=`<div class="dlg"><div class="dlg-stage">${stage(x)}</div><aside><div class="dlg-top"><div class="eyebrow">${x.c} · ${x.s}</div><div class="dlg-nav"><button class="icon-btn" data-step="-1" aria-label="Previous preset">←</button><button class="icon-btn" data-step="1" aria-label="Next preset">→</button><button class="icon-btn" data-close aria-label="Close">✕</button></div></div><h2>${x.t}</h2><p>${x.h} ${x.p}</p><dl><dt>Layout</dt><dd>${x.l[0].toUpperCase()+x.l.slice(1)}</dd><dt>Headings</dt><dd>${fname(x.f)}</dd><dt>Body</dt><dd>${fname(bfk(x))}</dd><dt>Added</dt><dd>${new Date(x.d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</dd></dl><div><div class="eyebrow">Palette · click to copy</div><div class="swatches">${x.pal.map(h=>`<button class="swatch" data-hex="${h}" style="background:${h}" title="${h}" aria-label="Copy ${h}"></button>`).join('')}</div></div><div class="dlg-actions"><button class="btn primary" data-copy="${x.t}">Copy HTML</button><button class="btn" data-dl="${x.t}">Download .html</button><button class="btn" data-fav="${x.t}" aria-pressed="${on}">${on?'♥ Saved':'♡ Save'}</button></div>${rel.length?`<div><div class="eyebrow">More ${x.c.toLowerCase()}</div><div class="related">${rel.map(r=>`<button class="filter" data-open="${r.t}">${r.t}</button>`).join('')}</div></div>`:''}</aside></div>`;
+dlg.innerHTML=`<div class="dlg"><div class="dlg-stage">${stage(pv(x))}</div><aside><div class="dlg-top"><div class="eyebrow">${x.c} · ${x.s}</div><div class="dlg-nav"><button class="icon-btn" data-step="-1" aria-label="Previous preset">←</button><button class="icon-btn" data-step="1" aria-label="Next preset">→</button><button class="icon-btn" data-close aria-label="Close">✕</button></div></div><h2>${x.t}</h2><p>${x.h} ${x.p}</p><dl><dt>Layout</dt><dd>${x.l[0].toUpperCase()+x.l.slice(1)}</dd><dt>Headings</dt><dd>${fname(x.f)}</dd><dt>Body</dt><dd>${fname(bfk(x))}</dd><dt>Added</dt><dd>${new Date(x.d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</dd></dl>${colorEditor(pv(x).pal.map((h,i)=>[`data-pc="${i}"`,ROLES[i],h]))}<div class="dlg-actions"><button class="btn primary" data-copy="${x.t}">Copy HTML</button><button class="btn" data-dl="${x.t}">Download .html</button><button class="btn" data-fav="${x.t}" aria-pressed="${on}">${on?'♥ Saved':'♡ Save'}</button></div>${rel.length?`<div><div class="eyebrow">More ${x.c.toLowerCase()}</div><div class="related">${rel.map(r=>`<button class="filter" data-open="${r.t}">${r.t}</button>`).join('')}</div></div>`:''}</aside></div>`;
 if(!dlg.open)dlg.showModal()}
 const DLG_NAV='<div class="dlg-nav"><button class="icon-btn" data-step="-1" aria-label="Previous">←</button><button class="icon-btn" data-step="1" aria-label="Next">→</button><button class="icon-btn" data-close aria-label="Close">✕</button></div>';
-function openComp(x){cur=x;dlg.className='';if(!list.includes(x))list=COMPS;
-dlg.innerHTML=`<div class="dlg comp"><div class="dlg-stage">${frame(x,true)}</div><aside><div class="dlg-top"><div class="eyebrow">${x.c} · ${esc(x.k)}</div>${DLG_NAV}</div><h2>${x.t}</h2><p>${esc(x.desc)}</p><div class="dlg-actions"><button class="btn primary" data-ccopy="css" data-t="${x.t}">Copy CSS</button><button class="btn" data-ccopy="html" data-t="${x.t}">Copy HTML</button><button class="btn" data-cdl="css" data-t="${x.t}">Download ${x.file||'.css'}</button><button class="btn" data-cdl="html" data-t="${x.t}">Download demo .html</button></div><div class="code-grid"><div class="code"><div class="eyebrow">HTML</div><pre><code>${esc(x.html)}</code></pre></div><div class="code"><div class="eyebrow">CSS</div><pre><code>${esc(cssOf(x))}</code></pre></div></div></aside></div>`;
+function openComp(x){cur=x;dlg.className='';if(!list.includes(x))list=COMPS;const v=cv(x),map=EDC[x.t]||{};
+dlg.innerHTML=`<div class="dlg comp"><div class="dlg-stage">${frame(v,true)}</div><aside><div class="dlg-top"><div class="eyebrow">${x.c} · ${esc(x.k)}</div>${DLG_NAV}</div><h2>${x.t}</h2><p>${esc(x.desc)}</p>${colorEditor(colorsOf(x).map(h=>[`data-cc="${h}"`,map[h]?`was ${h}`:'Colour',map[h]||h]))}<div class="dlg-actions"><button class="btn primary" data-ccopy="css" data-t="${x.t}">Copy CSS</button><button class="btn" data-ccopy="html" data-t="${x.t}">Copy HTML</button><button class="btn" data-cdl="css" data-t="${x.t}">Download ${x.file||'.css'}</button><button class="btn" data-cdl="html" data-t="${x.t}">Download demo .html</button></div><div class="code-grid"><div class="code"><div class="eyebrow">HTML</div><pre><code>${esc(v.html)}</code></pre></div><div class="code"><div class="eyebrow">CSS</div><pre><code>${esc(cssOf(v))}</code></pre></div></div></aside></div>`;
 if(!dlg.open)dlg.showModal()}
+// keep the grid card behind the modal in sync with the edited colours
+function refreshCard(){const el=cur.html?document.querySelector(`.preview[data-comp="${cur.t}"] .cframe`):document.querySelector(`.preview[data-open="${cur.t}"] > .stage`);if(el)el.outerHTML=cur.html?frame(cv(cur)):stage(pv(cur))}
+let colorRaf;
+document.addEventListener('input',e=>{const t=e.target,ds=t.dataset;if(!('pc' in ds||'cc' in ds)||!cur)return;
+ if('pc' in ds){const pal=[...pv(cur).pal];pal[+ds.pc]=t.value;EDP[cur.t]=pal}
+ else{const map={...EDC[cur.t]};if(t.value===ds.cc)delete map[ds.cc];else map[ds.cc]=t.value;if(Object.keys(map).length)EDC[cur.t]=map;else delete EDC[cur.t]}
+ const hb=t.parentElement.querySelector('.hexbtn');hb.textContent=hb.dataset.hex=t.value;
+ cancelAnimationFrame(colorRaf);colorRaf=requestAnimationFrame(()=>{
+  if('pc' in ds){dlg.querySelector('.dlg-stage').innerHTML=stage(pv(cur));refreshCard();return}
+  const v=cv(cur),codes=dlg.querySelectorAll('.code code');dlg.querySelector('.cframe iframe').srcdoc=cdoc(v,true);codes[0].textContent=v.html;codes[1].textContent=cssOf(v)})});
+document.addEventListener('change',e=>{if('cc' in e.target.dataset&&cur)refreshCard()});
 const step=n=>(cur.html?openComp:open)(list[(list.indexOf(cur)+n+list.length)%list.length]);
 let tt;function toast(m){const el=$('#toast');(dlg.open?dlg:document.body).append(el);el.textContent=m;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),1800)}
 async function copyText(s,ok,btn){try{await navigator.clipboard.writeText(s);toast(ok);if(btn){const o=btn.textContent;btn.textContent='Copied ✓';setTimeout(()=>btn.textContent=o,1400)}}catch(e){toast('Clipboard is blocked here — use Download instead')}}
@@ -995,11 +1021,12 @@ const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':mq.matches;
 function paintTheme(){const d=isDark(),b=$('#themeBtn');b.setAttribute('aria-label',d?'Switch to light mode':'Switch to dark mode');b.innerHTML=d?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>'}
 mq.addEventListener('change',paintTheme);
 
-document.addEventListener('click',e=>{const t=e.target.closest('[data-setpro],[data-auth],[data-logout],[data-del],[data-tool],[data-layer],[data-lg],[data-cat],[data-copy],[data-open],[data-fav],[data-dl],[data-hex],[data-toast],[data-step],[data-close],[data-ccat],[data-ccopy],[data-cdl],[data-comp],#themeBtn');if(!t)return;const d=t.dataset;
+document.addEventListener('click',e=>{const t=e.target.closest('[data-creset],[data-setpro],[data-auth],[data-logout],[data-del],[data-tool],[data-layer],[data-lg],[data-cat],[data-copy],[data-open],[data-fav],[data-dl],[data-hex],[data-toast],[data-step],[data-close],[data-ccat],[data-ccopy],[data-cdl],[data-comp],#themeBtn');if(!t)return;const d=t.dataset;
 if(t.id==='themeBtn'){root.dataset.theme=isDark()?'light':'dark';store.set('gf-theme',root.dataset.theme);paintTheme()}
 else if('cat' in d){cat=d.cat;document.querySelectorAll('[data-cat]').forEach(b=>b.classList.toggle('active',b===t));paintGrid()}
-else if('copy' in d)copyText(exportHTML(byT(d.copy)),`${d.copy} copied as HTML`,t);
-else if('dl' in d)saveFile(slug(d.dl)+'.html',exportHTML(byT(d.dl)),'text/html');
+else if('creset' in d){delete (cur.html?EDC:EDP)[cur.t];refreshCard();(cur.html?openComp:open)(cur);toast('Colours reset')}
+else if('copy' in d)copyText(exportHTML(pv(byT(d.copy))),`${d.copy} copied as HTML`,t);
+else if('dl' in d)saveFile(slug(d.dl)+'.html',exportHTML(pv(byT(d.dl))),'text/html');
 else if('setpro' in d)setPro(d.setpro,d.to==='true',t);
 else if('auth' in d)openAuth(d.auth);
 else if('logout' in d)api('/api/logout',{}).then(()=>{me=null;paintAcct();toast('Signed out');route()}).catch(err=>toast(err.message));
@@ -1008,8 +1035,8 @@ else if('tool' in d)lgSetTool(d.tool);
 else if('layer' in d){lgSel=+d.layer;lgRender();lgPanel()}
 else if('lg' in d)lgAction(d.lg);
 else if('ccat' in d){ccat=d.ccat;document.querySelectorAll('[data-ccat]').forEach(b=>b.classList.toggle('active',b===t));paintCGrid()}
-else if('ccopy' in d){const x=byC(d.t);copyText(d.ccopy==='css'?cssOf(x):x.html,`${x.t} ${d.ccopy.toUpperCase()} copied`,t)}
-else if('cdl' in d){const x=byC(d.t);d.cdl==='css'?saveFile(x.file||slug(x.t)+'.css',cssOf(x),'text/css'):saveFile(slug(x.t)+'.html',cdoc(x),'text/html')}
+else if('ccopy' in d){const x=cv(byC(d.t));copyText(d.ccopy==='css'?cssOf(x):x.html,`${x.t} ${d.ccopy.toUpperCase()} copied`,t)}
+else if('cdl' in d){const x=cv(byC(d.t));d.cdl==='css'?saveFile(x.file||slug(x.t)+'.css',cssOf(x),'text/css'):saveFile(slug(x.t)+'.html',cdoc(x),'text/html')}
 else if('comp' in d)openComp(byC(d.comp));
 else if('fav' in d)toggleFav(d.fav);
 else if('hex' in d)copyText(d.hex,`${d.hex} copied`);

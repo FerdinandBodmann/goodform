@@ -80,7 +80,8 @@ dialog.narrow{width:min(420px,94vw)}.auth{padding:26px;display:flex;flex-directi
 .palchip i{width:16px;height:16px;border-radius:50%;border:2px solid var(--card);margin-right:-6px}.palchip i:nth-of-type(4){margin-right:6px}
 .nav{overflow-x:auto;scrollbar-width:none}
 .pb{display:grid;grid-template-columns:220px minmax(0,1fr) 280px;gap:16px;border-top:1px solid var(--line);padding:24px 0 70px;align-items:start}
-.pb-side .blk{display:block;width:100%;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font-size:12px}.pb-side .blk:hover{border-color:var(--muted)}
+.pb-side .blk{display:block;width:100%;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);font-size:12px}.pb-side .blk:hover{border-color:var(--muted)}.pb-side .blk[hidden]{display:none}.libgrp .blk{margin-bottom:4px}.libcat{margin:8px 0 4px!important}
+.bfind{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper);font-size:12px}.libgrp summary{cursor:pointer;font:10px 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:8px 0 4px}
 .pb-side input[type=color]{width:100%;height:28px;border:1px solid var(--line);border-radius:6px;background:none;padding:2px}.pb-side .row{grid-template-columns:76px 1fr}
 .pb-bar{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.pb-bar input{flex:1;min-width:140px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);font-size:13px}
 .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}.seg button{border:0;background:var(--card);padding:7px 12px;font-size:12px}.seg button.on{background:var(--btn);color:var(--btnt)}
@@ -1027,19 +1028,37 @@ portfolio:{name:'Portfolio',pal:1,font:0,radius:4,blocks:['nav','hero-big','feat
 const bStarter=k=>{const s=STARTERS[k];return {title:s.name,pal:PALETTES[s.pal].slice(1),font:s.font,radius:s.radius,blocks:s.blocks.map(t=>({type:t,f:{...(s.f?.[t]||{})}}))}};
 let BS=store.get('gf-builder',null);
 if(!BS||!Array.isArray(BS.blocks)||!Array.isArray(BS.pal))BS=bStarter('saas');
-BS.blocks=BS.blocks.filter(b=>BLOCKS[b.type]);
+// library sections: any component ("comp:<title>") or Explore preset ("preset:<title>") dropped into the page
+const libSplit=type=>{const i=type.indexOf(':');return [type.slice(0,i),type.slice(i+1)]};
+const libItem=type=>{const [k,t]=libSplit(type);return k==='comp'?byC(t):k==='preset'?byT(t):null};
+const bName=b=>BLOCKS[b.type]?.name||`${libSplit(b.type)[1]} · ${libSplit(b.type)[0]==='comp'?'component':'preset'}`;
+// prefix every selector with the section's class so a component's CSS (even :root/body rules in kits) only touches its own section
+const scopeCSS=(css,scope)=>css.replace(/\/\*[\s\S]*?\*\//g,'').replace(/([^{}]+)\{([^{}]*)\}/g,(m,sel,body)=>{const s=sel.trim();
+ if(s.startsWith('@')||/^(from|to|[\d.]+%)(\s*,\s*(from|to|[\d.]+%))*$/.test(s))return m;
+ return sel.match(/^\s*/)[0]+s.split(',').map(p=>{p=p.trim();return /^(:root|html|body)$/.test(p)?scope:`${scope} ${p.replace(/^(:root|html|body)\s+/,'')}`}).join(',')+`{${body}}`});
+// library text is edited by position: every element whose only content is text gets an index, edits are stored per index
+function withTexts(html,texts,edit){const t=document.createElement('template');t.innerHTML=html;let i=0;
+ for(const el of t.content.querySelectorAll('*')){if(el.children.length||!el.textContent.trim()||el.tagName==='STYLE')continue;if(texts&&texts[i]!=null)el.textContent=texts[i];if(edit)el.setAttribute('data-ti',i);i++}
+ return t.innerHTML}
+function bLib(b,edit){const [k]=libSplit(b.type),x=libItem(b.type);if(!x)return null;
+ if(k==='preset')return {key:'preset',html:`<section class="p-sec"><div class="wrap">${withTexts(stage({...x,pal:BS.pal.slice(0,6)}),b.t,edit)}</div></section>`,css:MOCK_CSS+'\n.p-sec{padding:56px 0}.p-sec .stage{width:100%;border-radius:var(--r)}'};
+ const map=mapToPalette(colorUses(x),['',...BS.pal]),cls='c-'+slug(x.t);
+ return {key:b.type,html:`<section class="${cls}" style="background:${recolor(x.bg,map)}">${withTexts(recolor(x.html,map),b.t,edit)}</section>`,
+  css:`.${cls}{position:relative;padding:56px 24px;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;${x.body||''}}\n${scopeCSS(recolor(x.css,map),'.'+cls)}`}}
+BS.blocks=BS.blocks.filter(b=>BLOCKS[b.type]||libItem(b.type));
 let bSel=-1,bY=0,bScrollTo=null;
 const bSave=()=>store.set('gf-builder',BS);
-function bPage(edit){const F=BFONTS[BS.font]||BFONTS[0],used=[...new Set(BS.blocks.map(b=>b.type))];
- const body=BS.blocks.map((b,i)=>{const B=BLOCKS[b.type],f=Object.fromEntries(Object.entries({...B.f,...b.f}).map(([k,v])=>[k,esc(v)])),h=B.html(f);
-  return edit?`<div data-b="${i}">${h.replace(/<details(?! open)/g,'<details open')}</div>`:h}).join('\n');
+function bPage(edit){const F=BFONTS[BS.font]||BFONTS[0];
+ const parts=BS.blocks.map(b=>{const B=BLOCKS[b.type];if(!B)return bLib(b,edit);const f=Object.fromEntries(Object.entries({...B.f,...b.f}).map(([k,v])=>[k,esc(v)]));return {key:b.type,html:B.html(f),css:B.css}});
+ const body=parts.map((p,i)=>edit?`<div data-b="${i}">${p.html.replace(/<details(?! open)/g,'<details open')}</div>`:p.html).join('\n');
+ const css=[...new Map(parts.map(p=>[p.key,p.css])).values()].join('\n');
  return `<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(BS.title||'Homepage')}</title>${F[4]?`<link href="https://fonts.googleapis.com/css2?${F[4]}&display=swap" rel="stylesheet">`:''}
 <style>:root{${BVARS.map((k,i)=>`${k}:${BS.pal[i]}`).join(';')};--hf:${F[1]};--bf:${F[2]};--hw:${F[3]};--r:${BS.radius}px;--line:color-mix(in srgb,var(--text) 12%,transparent)}
 ${BASE_CSS}
-${used.map(t=>BLOCKS[t].css).join('\n')}${edit?'\n'+EDIT_CSS:''}</style></head><body>
+${css}${edit?'\n'+EDIT_CSS:''}</style></head><body>
 ${body}
 </body></html>`}
-const bExport=()=>bPage(false).replace(/ data-f="\w+"/g,'');
+const bExport=()=>bPage(false).replace(/ data-(f|ti)="\w+"/g,'');
 const bVar=(k,v)=>$('#bFrame')?.contentDocument?.documentElement.style.setProperty(k,v);
 function bRender(){const fr=$('#bFrame');if(!fr)return;bY=fr.contentWindow?.scrollY||0;fr.srcdoc=bPage(true)}
 function bChanged(){bSave();bRender();bPanel()}
@@ -1047,25 +1066,30 @@ function bSelect(i,scroll){bSel=i;document.querySelectorAll('.sec').forEach((s,j
  d.querySelectorAll('[data-b]').forEach(x=>x.classList.toggle('sel',+x.dataset.b===i));if(scroll)d.querySelector(`[data-b="${i}"]`)?.scrollIntoView({behavior:'smooth',block:'start'})}
 // inline editing: the preview is a same-origin iframe, so its text edits write straight back into the page state
 function bWire(){const fr=$('#bFrame'),d=fr?.contentDocument;if(!d||!d.body)return;
- d.querySelectorAll('[data-f]').forEach(el=>{el.setAttribute('contenteditable','plaintext-only');if(el.contentEditable!=='plaintext-only')el.contentEditable='true';el.spellcheck=false});
- d.addEventListener('input',e=>{const el=e.target.closest?.('[data-f]'),bl=e.target.closest?.('[data-b]');if(!el||!bl)return;BS.blocks[+bl.dataset.b].f[el.dataset.f]=el.innerText.replace(/\s*\n\s*/g,' ');bSave()});
- d.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.closest?.('[data-f]')){e.preventDefault();e.target.blur()}});
- d.addEventListener('click',e=>{if(e.target.closest('a,summary'))e.preventDefault();const bl=e.target.closest('[data-b]');if(bl)bSelect(+bl.dataset.b,false)});
+ d.querySelectorAll('[data-f],[data-ti]').forEach(el=>{el.setAttribute('contenteditable','plaintext-only');if(el.contentEditable!=='plaintext-only')el.contentEditable='true';el.spellcheck=false});
+ d.addEventListener('input',e=>{const el=e.target.closest?.('[data-f],[data-ti]'),bl=e.target.closest?.('[data-b]');if(!el||!bl)return;const blk=BS.blocks[+bl.dataset.b],txt=el.innerText.replace(/\s*\n\s*/g,' ');
+  if(el.dataset.f!=null)blk.f[el.dataset.f]=txt;else (blk.t=blk.t||{})[el.dataset.ti]=txt;bSave()});
+ d.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.closest?.('[data-f],[data-ti]')){e.preventDefault();e.target.blur()}});
+ d.addEventListener('click',e=>{if(e.target.closest('a,summary,button'))e.preventDefault();const bl=e.target.closest('[data-b]');if(bl)bSelect(+bl.dataset.b,false)});
  if(bScrollTo!=null){d.querySelector(`[data-b="${bScrollTo}"]`)?.scrollIntoView({block:'start'});bScrollTo=null}else fr.contentWindow.scrollTo(0,bY);
  bSelect(bSel,false)}
-function bPanel(){const L=$('#bLib'),R=$('#bSet');if(!L)return;const cats=[...new Set(Object.values(BLOCKS).map(b=>b.cat))],n=BS.blocks.length;
- L.innerHTML=`<div class="eyebrow">Start from</div><div class="lm-btns">${Object.entries(STARTERS).map(([k,s])=>`<button class="btn sm" data-bstart="${k}">${s.name}</button>`).join('')}</div>${cats.map(c=>`<div class="eyebrow" style="margin-top:6px">${c}</div>${Object.entries(BLOCKS).filter(([,b])=>b.cat===c).map(([k,b])=>`<button class="blk" data-badd="${k}">+ ${b.name}</button>`).join('')}`).join('')}`;
+const libList=(items,kind)=>[...new Set(items.map(x=>x.c))].map(c=>`<p class="lm-hint libcat">${c}</p>${items.filter(x=>x.c===c).map(x=>`<button class="blk" data-badd="${kind}:${x.t}">+ ${x.t}</button>`).join('')}`).join('');
+// the library panel is built once so open groups and the search stay put while you add sections
+function bLibPanel(){const L=$('#bLib'),cats=[...new Set(Object.values(BLOCKS).map(b=>b.cat))];
+ L.innerHTML=`<div class="eyebrow">Start from</div><div class="lm-btns">${Object.entries(STARTERS).map(([k,s])=>`<button class="btn sm" data-bstart="${k}">${s.name}</button>`).join('')}</div><input class="bfind" data-bfind placeholder="Search all sections…" aria-label="Search sections">${cats.map(c=>`<div class="eyebrow" style="margin-top:6px">${c}</div>${Object.entries(BLOCKS).filter(([,b])=>b.cat===c).map(([k,b])=>`<button class="blk" data-badd="${k}">+ ${b.name}</button>`).join('')}`).join('')}
+<details class="libgrp"><summary>Components · ${COMPS.length}</summary>${libList(COMPS,'comp')}</details><details class="libgrp"><summary>Presets from Explore · ${DATA.length}</summary>${libList(DATA,'preset')}</details>`}
+function bPanel(){const R=$('#bSet');if(!R)return;const n=BS.blocks.length;
  R.innerHTML=`<div class="eyebrow">Palette</div><div class="palettes" style="margin-top:0">${PALETTES.map((P,i)=>`<button class="palchip" data-bpal="${i}">${[1,3,5,7].map(j=>`<i style="background:${P[j]}"></i>`).join('')}${P[0]}</button>`).join('')}</div>
 ${BROLES.map((r,i)=>`<div class="row"><span>${r}</span><input type="color" data-bcol="${i}" value="${BS.pal[i]}" aria-label="${r}"></div>`).join('')}
 <div class="row"><span>Fonts</span><select data-bfont aria-label="Fonts">${BFONTS.map((f,i)=>`<option value="${i}"${i===BS.font?' selected':''}>${f[0]}</option>`).join('')}</select></div>
 <div class="row"><span>Corners</span><input type="range" data-brad min="0" max="32" value="${BS.radius}" aria-label="Corner radius"></div>
-<div class="eyebrow">Sections · ${n}</div><div class="secs">${BS.blocks.map((b,i)=>`<div class="sec${i===bSel?' on':''}"><button data-bsel="${i}">${BLOCKS[b.type].name}</button><button class="ib" data-bmove="${i}" data-dir="-1" aria-label="Move up"${i?'':' disabled'}>↑</button><button class="ib" data-bmove="${i}" data-dir="1" aria-label="Move down"${i<n-1?'':' disabled'}>↓</button><button class="ib" data-bdup="${i}" aria-label="Duplicate">⧉</button><button class="ib" data-bdel="${i}" aria-label="Delete">✕</button></div>`).join('')||'<p class="lm-hint">Add a section from the left.</p>'}</div>
+<div class="eyebrow">Sections · ${n}</div><div class="secs">${BS.blocks.map((b,i)=>`<div class="sec${i===bSel?' on':''}"><button data-bsel="${i}">${esc(bName(b))}</button><button class="ib" data-bmove="${i}" data-dir="-1" aria-label="Move up"${i?'':' disabled'}>↑</button><button class="ib" data-bmove="${i}" data-dir="1" aria-label="Move down"${i<n-1?'':' disabled'}>↓</button><button class="ib" data-bdup="${i}" aria-label="Duplicate">⧉</button><button class="ib" data-bdel="${i}" aria-label="Delete">✕</button></div>`).join('')||'<p class="lm-hint">Add a section from the left.</p>'}</div>
 <p class="lm-hint">Click any text in the preview to edit it, press Enter when you’re done. Your page is saved in this browser.</p>`}
-function initBuilder(){const fr=$('#bFrame');fr.addEventListener('load',bWire);bRender();bPanel()}
+function initBuilder(){const fr=$('#bFrame');fr.addEventListener('load',bWire);bRender();bLibPanel();bPanel()}
 // two-step confirm for destructive buttons: first click arms, second click acts
 function armed(t,label){if(t.dataset.armed)return true;const o=t.textContent;t.dataset.armed=1;t.textContent=label;setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.textContent=o}},2500);return false}
 function bClick(t,d){
- if('badd' in d){const at=bSel>=0?bSel+1:BS.blocks.length;BS.blocks.splice(at,0,{type:d.badd,f:{}});bSel=bScrollTo=at;bChanged();toast(`${BLOCKS[d.badd].name} added`)}
+ if('badd' in d){const at=bSel>=0?bSel+1:BS.blocks.length;BS.blocks.splice(at,0,{type:d.badd,f:{}});bSel=bScrollTo=at;bChanged();toast(`${bName({type:d.badd})} added`)}
  else if('bstart' in d){if(!armed(t,'Replace page?'))return;BS=bStarter(d.bstart);bSel=-1;bY=0;$('#bTitle').value=BS.title;bChanged();toast(`${BS.title} starter loaded`)}
  else if('bpal' in d){BS.pal=PALETTES[+d.bpal].slice(1);BVARS.forEach((k,i)=>bVar(k,BS.pal[i]));bSave();bPanel()}
  else if('bmove' in d){const i=+d.bmove,j=i+(+d.dir);[BS.blocks[i],BS.blocks[j]]=[BS.blocks[j],BS.blocks[i]];bSel=bScrollTo=j;bChanged()}
@@ -1077,6 +1101,7 @@ function bClick(t,d){
 document.addEventListener('input',e=>{const t=e.target,ds=t.dataset;if(!t.closest?.('.pb'))return;
  if('bcol' in ds){BS.pal[+ds.bcol]=t.value;bVar(BVARS[+ds.bcol],t.value)}
  else if('brad' in ds){BS.radius=+t.value;bVar('--r',t.value+'px')}
+ else if('bfind' in ds){const q=t.value.trim().toLowerCase();document.querySelectorAll('#bLib .blk').forEach(b=>b.hidden=!!q&&!b.textContent.toLowerCase().includes(q));document.querySelectorAll('#bLib .libgrp').forEach(g=>g.open=!!q);return}
  else if(t.id==='bTitle')BS.title=t.value;else return;
  bSave()});
 document.addEventListener('change',e=>{if('bfont' in e.target.dataset){BS.font=+e.target.value;bSave();bRender()}});

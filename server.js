@@ -3,12 +3,17 @@
 //   node server.js                     start at http://localhost:3000 (set PORT to change)
 //   node server.js make-pro <email>    give an account Pro (can upload)
 //   node server.js remove-pro <email>  take Pro away
+//   node server.js test                self-check the Stripe webhook signature logic
+// Stripe billing needs three env vars: STRIPE_SECRET_KEY, STRIPE_PRICE_ID (a recurring price), STRIPE_WEBHOOK_SECRET
+// (from the webhook endpoint you point at POST /api/billing/webhook). Without them, checkout/webhook just error clearly.
 const http = require('node:http'), fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
 
 const ROOT = __dirname, DATA = path.join(ROOT, 'data'), UPLOADS = path.join(DATA, 'uploads'), DB_FILE = path.join(DATA, 'db.json');
 const PORT = +process.env.PORT || 3000, MAX_FILE = 5 * 1024 * 1024, MAX_PER_USER = 100, SESSION_DAYS = 30;
 // The only account that can open the admin panel. Admin rights come from this email, not from Pro, so revoking your own Pro can't lock you out.
 const ADMIN_EMAIL = 'ferdinandbodmann@gmail.com';
+const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY, STRIPE_PRICE = process.env.STRIPE_PRICE_ID, STRIPE_WH_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
+const PUBLIC_URL = process.env.PUBLIC_URL; // e.g. https://goodform.example — used for Stripe redirect URLs when there's no Origin header to go by
 fs.mkdirSync(UPLOADS, { recursive: true });
 
 // shortcut: the whole database is one JSON file rewritten on every change; fine for hundreds of users, move to SQLite/Postgres before real traffic.
@@ -21,8 +26,17 @@ function save() { const tmp = DB_FILE + '.tmp'; fs.writeFileSync(tmp, JSON.strin
 
 // ---- admin CLI ----
 const [cmd, arg] = process.argv.slice(2);
+if (cmd === 'test') {
+  const secret = 'whsec_test', payload = '{"hello":"world"}', t = '1700000000';
+  const sig = crypto.createHmac('sha256', secret).update(`${t}.${payload}`).digest('hex');
+  console.assert(verifyStripeSig(Buffer.from(payload), `t=${t},v1=${sig}`, secret) === true, 'FAIL: valid signature should verify');
+  console.assert(verifyStripeSig(Buffer.from(payload), `t=${t},v1=${sig.slice(0, -1)}0`, secret) === false, 'FAIL: tampered signature should not verify');
+  console.assert(verifyStripeSig(Buffer.from(payload), '', secret) === false, 'FAIL: missing signature should not verify');
+  console.log('webhook signature check: OK');
+  process.exit(0);
+}
+if (cmd && cmd !== 'make-pro' && cmd !== 'remove-pro') { console.error('Usage: node server.js [make-pro|remove-pro <email>|test]'); process.exit(1); }
 if (cmd) {
-  if (cmd !== 'make-pro' && cmd !== 'remove-pro') { console.error('Usage: node server.js [make-pro|remove-pro <email>]'); process.exit(1); }
   const u = db.users.find(u => u.email === String(arg || '').trim().toLowerCase());
   if (!u) { console.error(`No account with email ${arg}`); process.exit(1); }
   u.pro = cmd === 'make-pro'; save();
@@ -65,6 +79,31 @@ function startSession(req, u) {
   save();
   const secure = req.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
   return `gf_session=${t}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${SESSION_DAYS * 86400}${secure}`;
+}
+// ---- Stripe: plain REST calls over Node's built-in fetch, no SDK needed for this few endpoints ----
+async function stripeCall(ep, body) {
+  const r = await fetch(`https://api.stripe.com/v1/${ep}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${STRIPE_SECRET}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(body),
+  });
+  const j = await r.json();
+  if (!r.ok) throw fail(502, j.error?.message || 'Stripe request failed.');
+  return j;
+}
+function verifyStripeSig(raw, header, secret) {
+  const parts = Object.fromEntries(String(header || '').split(',').map(s => s.split('=')));
+  if (!parts.t || !parts.v1) return false;
+  const expected = crypto.createHmac('sha256', secret).update(`${parts.t}.${raw}`).digest('hex');
+  try { return crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(parts.v1, 'hex')); } catch { return false; } // length mismatch throws, not a match
+}
+function readRaw(req, limit) {
+  return new Promise((resolve, reject) => {
+    const chunks = []; let n = 0, tooBig = false;
+    req.on('data', c => { n += c.length; if (n > limit) tooBig = true; else chunks.push(c); });
+    req.on('end', () => tooBig ? reject(fail(413, 'Payload too large.')) : resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
 }
 function readJSON(req, limit) {
   return new Promise((resolve, reject) => {
@@ -134,6 +173,43 @@ async function handle(req, res) {
     const changed = !!target.pro !== b.pro;
     if (changed) { target.pro = b.pro; save(); } // setting the status it already has is a harmless no-op
     return send(res, 200, { user: { ...pub(target), created: target.created }, changed });
+  }
+
+  // ---- billing (Stripe) ----
+  if (m === 'POST' && p === '/api/billing/checkout') {
+    if (!user) throw fail(401, 'Please sign in.');
+    if (user.pro) throw fail(400, 'You already have Pro.');
+    if (!STRIPE_SECRET || !STRIPE_PRICE) throw fail(500, 'Billing isn’t configured yet.');
+    const origin = PUBLIC_URL || req.headers.origin || `http://localhost:${PORT}`;
+    const session = await stripeCall('checkout/sessions', {
+      mode: 'subscription', 'line_items[0][price]': STRIPE_PRICE, 'line_items[0][quantity]': '1',
+      client_reference_id: user.id, customer_email: user.email,
+      success_url: `${origin}/#/account`, cancel_url: `${origin}/#/pro`,
+    });
+    return send(res, 200, { url: session.url });
+  }
+  if (m === 'POST' && p === '/api/billing/portal') {
+    if (!user) throw fail(401, 'Please sign in.');
+    if (!user.stripeCustomer) throw fail(400, 'No billing account on file yet.');
+    if (!STRIPE_SECRET) throw fail(500, 'Billing isn’t configured yet.');
+    const origin = PUBLIC_URL || req.headers.origin || `http://localhost:${PORT}`;
+    const session = await stripeCall('billing_portal/sessions', { customer: user.stripeCustomer, return_url: `${origin}/#/account` });
+    return send(res, 200, { url: session.url });
+  }
+  if (m === 'POST' && p === '/api/billing/webhook') {
+    if (!STRIPE_WH_SECRET) throw fail(500, 'Webhook secret not configured.');
+    const raw = await readRaw(req, 1e6);
+    if (!verifyStripeSig(raw, req.headers['stripe-signature'], STRIPE_WH_SECRET)) throw fail(400, 'Invalid signature.');
+    let evt; try { evt = JSON.parse(raw.toString('utf8')); } catch { throw fail(400, 'Invalid JSON.'); }
+    const obj = evt.data && evt.data.object;
+    if (evt.type === 'checkout.session.completed' && obj?.client_reference_id) {
+      const u = db.users.find(u => u.id === obj.client_reference_id);
+      if (u) { u.pro = true; u.stripeCustomer = obj.customer; save(); }
+    } else if ((evt.type === 'customer.subscription.updated' || evt.type === 'customer.subscription.deleted') && obj?.customer) {
+      const u = db.users.find(u => u.stripeCustomer === obj.customer);
+      if (u) { u.pro = obj.status === 'active' || obj.status === 'trialing'; save(); } // covers cancellation and failed-payment downgrades alike
+    }
+    return send(res, 200, { received: true });
   }
 
   if (m === 'POST' && p === '/api/signup') {

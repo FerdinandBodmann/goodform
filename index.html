@@ -1045,7 +1045,8 @@ function withTexts(html,texts,edit){const t=document.createElement('template');t
 function bLib(b,edit){const [k]=libSplit(b.type),x=libItem(b.type);if(!x)return null;
  if(k==='preset')return {key:'preset',html:`<section class="p-sec"><div class="wrap">${withTexts(stage({...x,pal:BS.pal.slice(0,6)}),b.t,edit)}</div></section>`,css:MOCK_CSS+'\n.p-sec{padding:56px 0}.p-sec .stage{width:100%;border-radius:var(--r)}'};
  const map=mapToPalette(colorUses(x),['',...BS.pal]),cls='c-'+slug(x.t);
- return {key:b.type,html:`<section class="${cls}" style="background:${recolor(x.bg,map)}">${withTexts(recolor(x.html,map),b.t,edit)}</section>`,
+ // no section backdrop: the demo background isn't part of the component, so it sits straight on the page (use ◐ to make a component's backdrop the page background)
+ return {key:b.type,html:`<section class="${cls}">${withTexts(recolor(x.html,map),b.t,edit)}</section>`,
   css:`.${cls}{position:relative;padding:56px 24px;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;${x.body||''}}\n${scopeCSS(recolor(x.css,map),'.'+cls)}`}}
 // a section marked pagebg lends its (palette-recoloured) background to the whole page; other component sections go transparent so it reads as one surface
 function bPageBg(){const b=BS.blocks.find(b=>b.pagebg&&libSplit(b.type)[0]==='comp'),x=b&&libItem(b.type);if(!x)return '';
@@ -1054,7 +1055,7 @@ function bPageBg(){const b=BS.blocks.find(b=>b.pagebg&&libSplit(b.type)[0]==='co
  const base=last?lum(colorKey(last[0],last[1],last[2],last[3])):1,dark=base<.5;
  // keep text readable: if the page's text colour is too close to the new background, switch to light/dark text and see-through cards
  const fix=Math.abs(base-lum(BS.pal[2]))<.45?`:root{--text:${dark?'#f6f5f1':'#1c1c1a'};--muted:${dark?'rgba(246,245,241,.68)':'rgba(28,28,26,.62)'};--surface:${dark?'rgba(255,255,255,.08)':'rgba(255,255,255,.6)'}}`:'';
- return `\n/* page background from ${x.t} */\n${fix}body{background:${bg};background-attachment:fixed}section[class^="c-"]{background:transparent!important}${fx}`}
+ return `\n/* page background from ${x.t} */\n${fix}body{background:${bg};background-attachment:fixed}${fx}`}
 BS.blocks=BS.blocks.filter(b=>BLOCKS[b.type]||libItem(b.type));
 let bSel=-1,bY=0,bScrollTo=null;
 const bSave=()=>store.set('gf-builder',BS);

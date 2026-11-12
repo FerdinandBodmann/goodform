@@ -5,6 +5,10 @@ services:
       - "${PORT:-3000}:3000"
     environment:
       - PORT=3000
+      # Stripe test mode (sandbox "rgpu Sandbox"). Price was created for you: Good Form Pro, EUR 6/mo.
+      - STRIPE_SECRET_KEY=sk_test_PUT_YOUR_TEST_SECRET_KEY_HERE
+      - STRIPE_PRICE_ID=price_1UawyKQ0qxMAz26Ui5yst7BG
+      - STRIPE_WEBHOOK_SECRET=whsec_PUT_YOUR_WEBHOOK_SIGNING_SECRET_HERE
     volumes:
       - ./data:/app/data
     restart: unless-stopped
